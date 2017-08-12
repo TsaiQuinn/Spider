@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<module name="SpiderForm">
+  <bind service="SpiderIView.ICrawlView, SpiderIView" to="SpiderForm.CrawlForm, SpiderForm" />
+  <bind service="SpiderIBusiness.ICarBrandBusiness, SpiderIBusiness"
+        to="SpiderBusiness.CarBrandBusiness, SpiderBusiness" />
+  <bind service="SpiderIDataAccess.ICarBrandDataAccess,SpiderIDataAccess"
+        to="SpiderDataAccess.CarBrandDataAccess,SpiderDataAccess" />
+</module>

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <configSections>
+    <section name="autofac" type="Autofac.Configuration.SectionHandler, Autofac.Configuration" />
+  </configSections>
+  <autofac defaultAssembly="SpiderForm">
+    <components>
+      <component name="CrawlForm" type="SpiderForm.CrawlForm,SpiderForm" service="SpiderIView.ICrawlView,SpiderIView"
+                 instance-scrope="per-lifetime-scope" instance-ownership="lifetime-scope" inject-properties="true" />
+      <component name="CarBrandBusiness" type="SpiderBusiness.CarBrandBusiness,SpiderBusiness"
+                 service="SpiderIBusiness.ICarBrandBusiness,SpiderIBusiness" instance-scrope="per-lifetime-scope"
+                 instance-ownership="lifetime-scope" inject-properties="true" />
+      <component name="CarBrandDataAccess" type="SpiderDataAccess.CarBrandDataAccess,SpiderDataAccess"
+                 service="SpiderIDataAccess.ICarBrandDataAccess,SpiderIDataAccess" instance-scrope="per-lifetime-scope"
+                 instance-ownership="lifetime-scope" inject-properties="true" /> 
+      <!--    <component name="1">-->
+      <!--      <type>SpiderBusiness.CarBrandBusiness,SpiderBusiness</type>-->
+      <!--      <service name="1" type="SpiderIBusiness.ICarBrandBusiness" />-->
+      <!--      <injectProperties>true</injectProperties>-->
+      <!--    </component>-->
+      <!--    <component name="2">-->
+      <!--      <type>SpiderDataAccess.CarBrandDataAccess,SpiderDataAccess</type>-->
+      <!--      <service name="2" type="SpiderIDataAccess.ICarBrandDataAccess" />-->
+      <!--      <injectProperties>true</injectProperties>-->
+      <!--    </component>-->
+    </components>
+  </autofac>
+</configuration>
