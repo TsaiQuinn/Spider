@@ -12,6 +12,9 @@ using SpiderIBusiness;
 using SpiderIDataAccess;
 using SpiderIView;
 using SpiderPresenters;
+using Spring.Context;
+using Spring.Context.Support;
+using Spring.Objects.Factory;
 
 namespace SpiderForm
 {
@@ -28,17 +31,19 @@ namespace SpiderForm
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            #region Autofac 采用配置文件或者代码的方式进行注入
 
-            var builder = new ContainerBuilder();
+
+            #region Autofac 采用配置文件或者代码的方式进行注入，这种方式还有问题
+
+            //            var builder = new ContainerBuilder();
 
             #region 配置文件方式
 
-            var config = new ConfigurationBuilder();
-            config.AddXmlFile("config/autofac_ioc.xml", false);
-            var module = new ConfigurationModule(config.Build());
-            builder.RegisterModule(module);
-            builder.RegisterType<CrawlPresenter>().As<CrawlPresenter>();
+            //            var config = new ConfigurationBuilder();
+            //            config.AddXmlFile("config/autofac_ioc.xml", false);
+            //            var module = new ConfigurationModule(config.Build());
+            //            builder.RegisterModule(module);
+            //            builder.RegisterType<CrawlPresenter>().As<BasePresenter<CrawlForm>>();
             #endregion
 
             #region 代码方式
@@ -50,8 +55,8 @@ namespace SpiderForm
 
             #endregion
 
-            var container = builder.Build();
-            var form = container.Resolve<CrawlPresenter>();
+            //            var container = builder.Build();
+            //            var form = container.Resolve<CrawlPresenter>();
 
             #endregion
 
@@ -76,6 +81,15 @@ namespace SpiderForm
             #endregion
 
             //            var form = kernel.Get<CrawlPresenter>();
+
+            #endregion
+
+            #region Spring.NET方式配置
+
+            var ctx = new XmlApplicationContext("config/spring_ioc.xml");
+
+            var objectFactory = (IObjectFactory) ctx;
+            var form = objectFactory.GetObject("CrawlPresenter") as CrawlPresenter;
 
             #endregion
 

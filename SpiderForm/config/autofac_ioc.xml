@@ -13,6 +13,7 @@
       <component name="CarBrandDataAccess" type="SpiderDataAccess.CarBrandDataAccess,SpiderDataAccess"
                  service="SpiderIDataAccess.ICarBrandDataAccess,SpiderIDataAccess" instance-scrope="per-lifetime-scope"
                  instance-ownership="lifetime-scope" inject-properties="true" /> 
+      
       <!--    <component name="1">-->
       <!--      <type>SpiderBusiness.CarBrandBusiness,SpiderBusiness</type>-->
       <!--      <service name="1" type="SpiderIBusiness.ICarBrandBusiness" />-->
