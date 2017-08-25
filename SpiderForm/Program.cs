@@ -1,18 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using Autofac;
-using Autofac.Configuration;
 using DevExpress.Skins;
 using DevExpress.UserSkins;
-using Microsoft.Extensions.Configuration;
-using Ninject;
-using SpiderBusiness;
-using SpiderDataAccess;
-using SpiderIBusiness;
-using SpiderIDataAccess;
-using SpiderIView;
 using SpiderPresenters;
-using Spring.Context;
 using Spring.Context.Support;
 using Spring.Objects.Factory;
 
@@ -31,8 +21,6 @@ namespace SpiderForm
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-
-
             #region Autofac 采用配置文件或者代码的方式进行注入，这种方式还有问题
 
             //            var builder = new ContainerBuilder();
@@ -44,6 +32,7 @@ namespace SpiderForm
             //            var module = new ConfigurationModule(config.Build());
             //            builder.RegisterModule(module);
             //            builder.RegisterType<CrawlPresenter>().As<BasePresenter<CrawlForm>>();
+
             #endregion
 
             #region 代码方式
@@ -59,7 +48,6 @@ namespace SpiderForm
             //            var form = container.Resolve<CrawlPresenter>();
 
             #endregion
-
 
             #region Ninject 采用配置文件或者代码的方式进行注入
 
@@ -87,13 +75,12 @@ namespace SpiderForm
             #region Spring.NET方式配置
 
             var ctx = new XmlApplicationContext("config/spring_ioc.xml");
-
             var objectFactory = (IObjectFactory) ctx;
             var form = objectFactory.GetObject("CrawlPresenter") as CrawlPresenter;
 
             #endregion
 
-            Application.Run(form.View as Form);
+            Application.Run(form?.View as Form);
         }
     }
 }

@@ -22,6 +22,11 @@ namespace SpiderBusiness
         public ICarBrandDataAccess CarBrandDataAccess { get; set; }
 
         /// <summary>
+        /// 数据操作通知
+        /// </summary>  
+        public event EventHandler<BrandViewModelEventArg> ShowInfoEvent;
+
+        /// <summary>
         ///     新增
         /// </summary>
         /// <param name="modelCarBrand">实体对象</param>
@@ -36,9 +41,9 @@ namespace SpiderBusiness
             throw new NotImplementedException();
         }
 
-        public void Update(CarBrand model)
+        public bool Update(CarBrand model)
         {
-            throw new NotImplementedException();
+            return CarBrandDataAccess.Update(model);
         }
 
         /// <summary>
@@ -51,9 +56,39 @@ namespace SpiderBusiness
             return CarBrandDataAccess.QueryList(expression);
         }
 
+        /// <summary>
+        /// 批量保存
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
         public bool SaveOrUpdateList(IList<CarBrand> list)
         {
-            throw new NotImplementedException();
+            if (list.Count > 0)
+            {
+                foreach (var brand in list)
+                {
+                    brand.Url = SpiderCommon.SpiderConfig.GetConfigValue("Domain") +
+                                brand.Url;
+                    var brands = this.QueryList(e => e.TagName == brand.TagName && e.Rid == brand.Rid &&
+                                                     e.Url == brand.Url);
+                    if (brands.Count == 1)
+                    {
+                        brands[0].BrandName = brand.BrandName;
+                        brands[0].AddTime = DateTime.Now;
+                        this.Update(brands[0]);
+                    }
+                    else
+                    {
+                        this.Insert(brand);
+                    }
+                    ShowInfoEvent?.Invoke(this, new BrandViewModelEventArg
+                    {
+                        Brand = brands.Count > 0 ? brands[0] : brand,
+                        Type = brands.Count > 0 ? 0 : 1
+                    }); 
+                }
+            }
+            return true;
         }
 
         /// <summary>

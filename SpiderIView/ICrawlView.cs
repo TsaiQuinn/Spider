@@ -7,8 +7,8 @@
 
 #endregion
 
-using System;
 using SpiderModel.Models;
+using System;
 
 namespace SpiderIView
 {
@@ -17,6 +17,16 @@ namespace SpiderIView
         /// <summary>
         ///     采集品牌
         /// </summary>
-        event EventHandler<CarBrandEventArgs> PickBrand;
+        event EventHandler PickBrandEvent;
+
+        /// <summary>
+        /// 采集车型
+        /// </summary>
+        event EventHandler PickModelEvent;
+
+        /// <summary>
+        /// 界面显示
+        /// </summary>
+        Action<BrandViewModelEventArg> ShowAction { get; set; }
     }
 }

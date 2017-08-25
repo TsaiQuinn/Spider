@@ -11,7 +11,10 @@ using System;
 
 namespace SpiderModel.Models
 {
-    public class CarBrandEventArgs : EventArgs
+    public class BrandViewModelEventArg: EventArgs
     {
+        public CarBrand Brand { get; set; }
+
+        public int Type { get; set; }
     }
 }

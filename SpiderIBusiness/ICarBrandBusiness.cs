@@ -1,8 +1,10 @@
 ﻿#region ----------------备注----------------
+
 // Author:CK 
 // FileName:ICarBrandBusiness.cs 
 // Create Date:2017-08-02
 // Create Time:15:10 
+
 #endregion
 
 using System;
@@ -13,6 +15,11 @@ namespace SpiderIBusiness
 {
     public interface ICarBrandBusiness
     {
+        /// <summary>
+        /// 数据操作通知
+        /// </summary>
+        event EventHandler<BrandViewModelEventArg> ShowInfoEvent;
+
         /// <summary>
         /// 新增
         /// </summary>
@@ -30,7 +37,7 @@ namespace SpiderIBusiness
         /// 更新
         /// </summary>
         /// <param name="model">实体对象</param>
-        void Update(CarBrand model);
+        bool Update(CarBrand model);
 
         /// <summary>
         /// 查询

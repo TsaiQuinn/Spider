@@ -1,8 +1,10 @@
 ﻿#region ----------------备注----------------
+
 // Author:TQ 
 // FileName:BaseDataAccess.cs 
 // Create Date:2017-06-13
 // Create Time:17:22 
+
 #endregion
 
 using System;
@@ -13,7 +15,7 @@ using NHibernate.Linq;
 
 namespace SpiderDataAccess
 {
-    public class BaseDataAccess<T> where T:class
+    public class BaseDataAccess<T> where T : class
     {
         private readonly ISession _session = NHibernateHelper.OpenSession();
 
@@ -47,7 +49,7 @@ namespace SpiderDataAccess
         /// </summary>
         /// <param name="model">实体对象</param>
         public virtual void Delete(T model)
-        { 
+        {
             using (var transaction = _session.BeginTransaction())
             {
                 try
@@ -68,15 +70,16 @@ namespace SpiderDataAccess
         /// 更新
         /// </summary>
         /// <param name="model">实体对象</param>
-        public virtual void Update(T model)
+        public virtual bool Update(T model)
         {
-            using (var transaction=_session.BeginTransaction())
+            using (var transaction = _session.BeginTransaction())
             {
                 try
                 {
                     _session.Update(model);
                     _session.Flush();
                     transaction.Commit();
+                    return true;
                 }
                 catch (Exception)
                 {
@@ -98,7 +101,7 @@ namespace SpiderDataAccess
             {
                 try
                 {
-                    result=_session.Get<T>(id);
+                    result = _session.Get<T>(id);
                     _session.Flush();
                     transaction.Commit();
                 }
@@ -123,7 +126,9 @@ namespace SpiderDataAccess
             {
                 try
                 {
-                    list = expression == null ? _session.Query<T>().ToList() : _session.Query<T>().Where(expression).ToList(); 
+                    list = expression == null
+                        ? _session.Query<T>().ToList()
+                        : _session.Query<T>().Where(expression).ToList();
                     _session.Flush();
                     transaction.Commit();
                 }
@@ -151,15 +156,15 @@ namespace SpiderDataAccess
                     foreach (var T in list)
                         _session.Update(T);
                     _session.Flush();
-                    tx.Commit(); 
+                    tx.Commit();
                 }
                 catch (HibernateException ex)
                 {
                     tx.Rollback();
                     result = false;
-                    throw ex; 
+                    throw ex;
                 }
-            } 
+            }
             return result;
         }
     }

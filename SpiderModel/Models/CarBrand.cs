@@ -19,6 +19,11 @@ namespace SpiderModel.Models
         public virtual int? Id { get; set; }
 
         /// <summary>
+        /// 关联ID
+        /// </summary>
+        public virtual int? Rid { get; set; }
+
+        /// <summary>
         ///     品牌链接地址
         /// </summary>
         public virtual string Url { get; set; }

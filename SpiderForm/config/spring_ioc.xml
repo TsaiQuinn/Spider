@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <!--<configuration>-->
 <!--  <configSections>-->
 <!--    <sectionGroup name="spring">-->
@@ -10,18 +11,18 @@
 <!--    <context>-->
 <!--      <resource uri="config://spring//objects"/>-->
 <!--    </context>-->
-    <objects xmlns="http://www.springframework.net">
-      <object name="CrawlForm" type="SpiderForm.CrawlForm,SpiderForm"/>
-      <object name="CarBrandBusiness" type="SpiderBusiness.CarBrandBusiness,SpiderBusiness">
-        <property name="CarBrandDataAccess" ref="CarBrandDataAccess"></property>
-      </object>
-<!--      <object name="ICarBrandBusiness" type="SpiderIBusiness.ICarBrandBusiness,SpiderIBusiness"/>-->
-      <object name="CarBrandDataAccess" type="SpiderDataAccess.CarBrandDataAccess,SpiderDataAccess"/>
-<!--      <object name="ICarBrandDataAccess" type="SpiderIDataAccess.ICarBrandDataAccess,SpiderIDataAccess"/>-->
-      <object name="CrawlPresenter" type="SpiderPresenters.CrawlPresenter,SpiderPresenters">
-        <constructor-arg index="0" ref="CrawlForm"/>
-        <property name="CarBrandBusiness" ref="CarBrandBusiness"/>
-      </object>
-    </objects>
+<objects xmlns="http://www.springframework.net">
+  <object name="CrawlForm" type="SpiderForm.CrawlForm,SpiderForm" />
+  <object name="CarBrandBusiness" type="SpiderBusiness.CarBrandBusiness,SpiderBusiness">
+    <property name="CarBrandDataAccess" ref="CarBrandDataAccess"></property>
+  </object>
+  <!--      <object name="ICarBrandBusiness" type="SpiderIBusiness.ICarBrandBusiness,SpiderIBusiness"/>-->
+  <object name="CarBrandDataAccess" type="SpiderDataAccess.CarBrandDataAccess,SpiderDataAccess" />
+  <!--      <object name="ICarBrandDataAccess" type="SpiderIDataAccess.ICarBrandDataAccess,SpiderIDataAccess"/>-->
+  <object name="CrawlPresenter" type="SpiderPresenters.CrawlPresenter,SpiderPresenters">
+    <constructor-arg index="0" ref="CrawlForm" />
+    <property name="CarBrandBusiness" ref="CarBrandBusiness" />
+  </object>
+</objects>
 <!--  </spring>-->
 <!--</configuration>-->

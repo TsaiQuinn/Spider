@@ -45,6 +45,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SpiderCommon\SpiderCommon.csproj">
+      <Project>{270cbe3d-0f53-4de4-8bc2-a5d59dee96b7}</Project>
+      <Name>SpiderCommon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SpiderIBusiness\SpiderIBusiness.csproj">
       <Project>{ad42756e-c781-4da9-a51d-d265002580e5}</Project>
       <Name>SpiderIBusiness</Name>

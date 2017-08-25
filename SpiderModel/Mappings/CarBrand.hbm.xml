@@ -5,6 +5,7 @@
     <id name="Id" type="Int32" column="id" length="11">
       <generator class="identity" />
     </id>
+    <property name="Rid" column="rid" type="Int32" length="11" />
     <property name="Url" column="url" type="String" length="128" />
     <property name="BrandName" column="brand" type="String" length="64" />
     <property name="BrandLogo" column="logo" type="String" length="256" />

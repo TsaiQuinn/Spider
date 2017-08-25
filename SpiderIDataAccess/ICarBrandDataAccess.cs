@@ -1,8 +1,10 @@
 ﻿#region ----------------备注----------------
+
 // Author:CK 
 // FileName:ICarBrandDataAccess.cs 
 // Create Date:2017-08-02
 // Create Time:15:11 
+
 #endregion
 
 using System;
@@ -30,7 +32,7 @@ namespace SpiderIDataAccess
         /// 更新
         /// </summary>
         /// <param name="model">实体对象</param>
-        void Update(CarBrand model);
+        bool Update(CarBrand model);
 
         /// <summary>
         /// 查询
