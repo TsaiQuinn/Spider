@@ -11,5 +11,9 @@
     <property name="BrandLogo" column="logo" type="String" length="256" />
     <property name="TagName" column="tagname" type="String" length="32" />
     <property name="AddTime" column="add_time" type="DateTime" />
+    <set name="CarModels" table="hengtu_carmodel">
+      <key column="Id"/>
+      <one-to-many class="SpiderModel.Models.CarModel, SpiderModel"/>
+    </set> 
   </class>
 </hibernate-mapping>

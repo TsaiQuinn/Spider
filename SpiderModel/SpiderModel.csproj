@@ -38,10 +38,14 @@
     <Compile Include="Models\Car.cs" />
     <Compile Include="Models\CarBrand.cs" />
     <Compile Include="Models\BrandViewModelEventArg.cs" />
+    <Compile Include="Models\CarModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mappings\CarBrand.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Mappings\CarModel.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
