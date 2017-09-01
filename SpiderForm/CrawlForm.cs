@@ -26,16 +26,16 @@ namespace SpiderForm
         /// <summary>
         /// 界面显示
         /// </summary>
-        public Action<BrandViewModelEventArg> ShowAction { get; set; }
+        public Action<ViewModelEventArg> ShowAction { get; set; }
 
         /// <summary>
         /// 界面显示
         /// </summary> 
-        private void View_ShowEvent(BrandViewModelEventArg arg)
+        private void View_ShowEvent(ViewModelEventArg arg)
         {
             if (this.InvokeRequired)
             {
-                BeginInvoke(new Action<BrandViewModelEventArg>(View_ShowEvent), arg);
+                BeginInvoke(new Action<ViewModelEventArg>(View_ShowEvent), arg);
                 return;
             }
             if (arg.Type == 0)

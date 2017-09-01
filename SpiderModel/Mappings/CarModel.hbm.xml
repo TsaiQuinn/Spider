@@ -11,7 +11,7 @@
     <property name="ImagePath" column="image" type="String" length="128" />
     <property name="LevelId" column="levelid" type="Int32" length="11" />
     <property name="AddTime" column="add_time" type="DateTime" /> 
-    <property name="LevelId" column="national_reference_price" type="String" length="30" />
+    <property name="NationalReferencePrice" column="national_reference_price" type="String" length="30" />
     <property name="Msrp" column="msrp" type="String" length="50" />
     <property name="SecondHand" column="second_hand" type="String" length="50" />
     <property name="Displacement" column="displacement" type="String" length="50" />

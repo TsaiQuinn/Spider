@@ -96,7 +96,7 @@ namespace SpiderPresenters
                 {
                     CarBrandBusiness.ShowInfoEvent += CarBrandBusiness_ShowDataEvent;
                     var parallelResult = Parallel.ForEach(listBrands, carBrand =>
-                    {
+                    { 
                         var modelTask =
                             SpiderRequest.DownloadString(
                                 $"{ConfigurationManager.AppSettings["BrandsUrl"]}&pagetype=masterbrand&objid={carBrand.Rid}");
@@ -104,50 +104,48 @@ namespace SpiderPresenters
                         string modelStr = modelTask.Result.Substring(14, modelTask.Result.Length - 15);
                         JObject modelJObject = (JObject) JsonConvert.DeserializeObject(modelStr);
                         Dictionary<string, object> modelDictionary =
-                            JsonConvert.DeserializeObject<Dictionary<string, object>>(modelJObject["brand"].ToString());
-                        var tempModel = new[]
-                            {new {type = "", name = "", url = "", butie = "", salestate = "", cur = ""}};
-                        object pair = modelDictionary[carBrand.TagName];
-                        JArray array = JArray.FromObject(pair);
-
-//                        from token in JArray.FromObject(pair)
-//                        where token["child"]!=null
-//                        let name = token["name"].ToString()
-//                        let jToken = JToken.FromObject(token["child"])
-//                        from child in jToken
-//                        where child["child"] != null
-//                        let childArray = JArray.FromObject(child["child"])
-//                        from model in childArray
-//                        select new 
-
-                        foreach (JToken token in array)
+                            JsonConvert.DeserializeObject<Dictionary<string, object>>(modelJObject["brand"].ToString());  
+                        IList<CarModel> carModels = new List<CarModel>();
+                        JArray array = JArray.FromObject(modelDictionary[carBrand.TagName]);
+                        foreach (var token in array)
                         {
                             if (token["child"] != null)
                             {
-                                string name = token["name"].ToString();
-                                JToken jToken = JToken.FromObject(token["child"]);
-                                foreach (JToken child in jToken)
+                                JToken childArray = JToken.FromObject(token["child"]);
+                                foreach (var child in childArray)
                                 {
-                                    if (child["child"] != null) //二级
+                                    if (child["child"] != null)
                                     {
-                                        JArray childArray = JArray.FromObject(child["child"]);
-
-//                                        JToken childToken = JToken.FromObject(child["child"]);
-//                                        foreach (
-//                                            ECarSeries carModel in
-//                                            childToken.Select(
-//                                                token1 => new ECarSeries(0, carBrand.Id, token1["name"].ToString(),
-//                                                    _domain + token1["url"], null, child["name"].ToString(), 0)))
-//                                        {
-//                                            bll.Insert(carModel);
-//                                            j++;
-//                                            bll.InsertAction?.Invoke(carModel, j);
-//                                        }
+                                        JToken childrenArray = JToken.FromObject(child["child"]);
+                                        foreach (var model in childrenArray)
+                                            carModels.Add(new CarModel
+                                            {
+                                                BrandId = carBrand.Id,
+                                                ModelName = model["name"].ToString(),
+                                                Factory = child["name"].ToString(),
+                                                LinkUrl = $"{ConfigurationManager.AppSettings["Domain"]}{model["url"]}",
+                                                AddTime = DateTime.Now,
+                                            });
+                                    }
+                                    else
+                                    {
+                                        carModels.Add(new CarModel
+                                        {
+                                            BrandId = carBrand.Id,
+                                            ModelName = child["name"].ToString(),
+                                            Factory =carBrand.BrandName,
+                                            LinkUrl = $"{ConfigurationManager.AppSettings["Domain"]}{child["url"]}",
+                                            AddTime = DateTime.Now,
+                                        });
                                     }
                                 }
                                 break;
-                            } 
+                            }
                         }
+                        if (carModels.Count > 0)
+                        {
+                            
+                        } 
                     });
                     if (parallelResult.IsCompleted)
                     {
@@ -166,7 +164,7 @@ namespace SpiderPresenters
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CarBrandBusiness_ShowDataEvent(object sender, BrandViewModelEventArg e)
+        private void CarBrandBusiness_ShowDataEvent(object sender, ViewModelEventArg e)
         {
             View.ShowAction?.Invoke(e);
         }

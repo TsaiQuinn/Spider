@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpiderModel.Models
 {
-    class CarModel
+    public class CarModel
     {
         /// <summary>
         ///     主键ID
@@ -34,13 +30,52 @@ namespace SpiderModel.Models
         public virtual string Factory { get; set; }
 
         /// <summary>
-        ///     品牌TAG
+        ///     车系logo地址
         /// </summary>
-        public virtual string TagName { get; set; }
-
+        public virtual string ImagePath { get; set; }
         /// <summary>
-        ///     添加时间
+        ///    
+        /// </summary>
+        public virtual int LevelId { get; set; }
+        /// <summary>
+        ///     全国参考价
+        /// </summary>
+        public virtual string NationalReferencePrice { get; set; }
+        /// <summary>
+        ///     厂商指导价
+        /// </summary>
+        public virtual string Msrp { get; set; }
+        /// <summary>
+        ///     二手车
+        /// </summary>
+        public virtual string SecondHand { get; set; }
+        /// <summary>
+        ///     排    量
+        /// </summary>
+        public virtual string Displacement { get; set; }
+        /// <summary>
+        ///    油耗
+        /// </summary>
+        public virtual string FuelConsumption { get; set; }
+        /// <summary>
+        ///    变速箱
+        /// </summary>
+        public virtual string Gearbox { get; set; }
+        /// <summary>
+        ///    保修
+        /// </summary>
+        public virtual string Warranty { get; set; }
+        /// <summary>
+        ///    颜色链接
+        /// </summary>
+        public virtual string ColorLink { get; set; }
+        /// <summary>
+        ///  添加时间      
         /// </summary>
         public virtual DateTime? AddTime { get; set; }
+        /// <summary>
+        /// 品牌
+        /// </summary>
+        public virtual CarBrand CarBrand { get; set; }
     }
 }

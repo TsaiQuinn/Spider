@@ -24,7 +24,7 @@ namespace SpiderBusiness
         /// <summary>
         /// 数据操作通知
         /// </summary>  
-        public event EventHandler<BrandViewModelEventArg> ShowInfoEvent;
+        public event EventHandler<ViewModelEventArg> ShowInfoEvent;
 
         /// <summary>
         ///     新增
@@ -81,7 +81,7 @@ namespace SpiderBusiness
                     {
                         this.Insert(brand);
                     }
-                    ShowInfoEvent?.Invoke(this, new BrandViewModelEventArg
+                    ShowInfoEvent?.Invoke(this, new ViewModelEventArg
                     {
                         Brand = brands.Count > 0 ? brands[0] : brand,
                         Type = brands.Count > 0 ? 0 : 1

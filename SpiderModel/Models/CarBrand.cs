@@ -8,6 +8,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 
 namespace SpiderModel.Models
 {
@@ -47,5 +48,10 @@ namespace SpiderModel.Models
         ///     添加时间
         /// </summary>
         public virtual DateTime? AddTime { get; set; }
+
+        /// <summary>
+        /// 车型
+        /// </summary>
+        public virtual IList<CarModel> CarModels { get; set; }
     }
 }
