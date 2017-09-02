@@ -16,8 +16,7 @@ using NHibernate.Linq;
 namespace SpiderDataAccess
 {
     public class BaseDataAccess<T> where T : class
-    {
-        private readonly ISession _session = NHibernateHelper.OpenSession();
+    { 
 
         /// <summary>
         /// 新增
@@ -27,18 +26,23 @@ namespace SpiderDataAccess
         public virtual int Insert(T model)
         {
             var id = 0;
-            using (var transaction = _session.BeginTransaction())
+            using(ISession session = NHibernateHelper.OpenSession())
+            using (var transaction = session.BeginTransaction())
             {
                 try
                 {
-                    id = (int) _session.Save(model);
-                    _session.Flush();
+                    id = (int) session.Save(model);
+                    session.Flush();
                     transaction.Commit();
                 }
                 catch (Exception)
                 {
                     transaction.Rollback();
                     throw;
+                }
+                finally
+                {
+                    session.Close();
                 }
             }
             return id;
@@ -50,18 +54,23 @@ namespace SpiderDataAccess
         /// <param name="model">实体对象</param>
         public virtual void Delete(T model)
         {
-            using (var transaction = _session.BeginTransaction())
+            using (ISession session = NHibernateHelper.OpenSession())
+            using (var transaction = session.BeginTransaction())
             {
                 try
                 {
-                    _session.Delete(model);
-                    _session.Flush();
+                    session.Delete(model);
+                    session.Flush();
                     transaction.Commit();
                 }
                 catch (Exception)
                 {
                     transaction.Rollback();
                     throw;
+                }
+                finally
+                {
+                    session.Close();
                 }
             }
         }
@@ -72,12 +81,13 @@ namespace SpiderDataAccess
         /// <param name="model">实体对象</param>
         public virtual bool Update(T model)
         {
-            using (var transaction = _session.BeginTransaction())
+            using (ISession session = NHibernateHelper.OpenSession())
+            using (var transaction = session.BeginTransaction())
             {
                 try
                 {
-                    _session.Update(model);
-                    _session.Flush();
+                    session.Update(model);
+                    session.Flush();
                     transaction.Commit();
                     return true;
                 }
@@ -85,6 +95,10 @@ namespace SpiderDataAccess
                 {
                     transaction.Rollback();
                     throw;
+                }
+                finally
+                {
+                    session.Close();
                 }
             }
         }
@@ -97,18 +111,23 @@ namespace SpiderDataAccess
         public virtual T FindBy(object id)
         {
             T result = null;
-            using (var transaction = _session.BeginTransaction())
+            using (ISession session = NHibernateHelper.OpenSession())
+            using (var transaction = session.BeginTransaction())
             {
                 try
                 {
-                    result = _session.Get<T>(id);
-                    _session.Flush();
+                    result = session.Get<T>(id);
+                    session.Flush();
                     transaction.Commit();
                 }
                 catch (Exception)
                 {
                     transaction.Rollback();
                     throw;
+                }
+                finally
+                {
+                    session.Close();
                 }
             }
             return result;
@@ -122,20 +141,25 @@ namespace SpiderDataAccess
         public virtual IList<T> QueryList(Func<T, bool> expression)
         {
             IList<T> list;
-            using (var transaction = _session.BeginTransaction())
+            using (ISession session = NHibernateHelper.OpenSession())
+            using (var transaction = session.BeginTransaction())
             {
                 try
                 {
                     list = expression == null
-                        ? _session.Query<T>().ToList()
-                        : _session.Query<T>().Where(expression).ToList();
-                    _session.Flush();
+                        ? session.Query<T>().ToList()
+                        : session.Query<T>().Where(expression).ToList();
+                    session.Flush();
                     transaction.Commit();
                 }
                 catch (Exception)
                 {
                     transaction.Rollback();
                     throw;
+                }
+                finally
+                {
+                    session.Close();
                 }
             }
             return list;
@@ -149,13 +173,14 @@ namespace SpiderDataAccess
         public virtual bool SaveOrUpdateList(IList<T> list)
         {
             var result = true;
-            using (var tx = _session.BeginTransaction())
+            using (ISession session = NHibernateHelper.OpenSession())
+            using (var tx = session.BeginTransaction())
             {
                 try
                 {
                     foreach (var T in list)
-                        _session.Update(T);
-                    _session.Flush();
+                        session.Update(T);
+                    session.Flush();
                     tx.Commit();
                 }
                 catch (HibernateException ex)
@@ -163,6 +188,10 @@ namespace SpiderDataAccess
                     tx.Rollback();
                     result = false;
                     throw ex;
+                }
+                finally
+                {
+                    session.Close();
                 }
             }
             return result;

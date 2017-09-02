@@ -24,6 +24,6 @@ namespace SpiderCommon
         public static Task<string> DownloadString(string url)
         {
             return url.GetStringAsync();
-        }
+        } 
     }
 }

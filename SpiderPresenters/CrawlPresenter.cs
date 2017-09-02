@@ -10,7 +10,9 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Flurl.Http;
@@ -27,12 +29,15 @@ namespace SpiderPresenters
 {
     public class CrawlPresenter : BasePresenter<ICrawlView>
     {
+        private readonly string _logoPath;
+
         /// <summary>
         ///     构造函数
         /// </summary>
         /// <param name="view"></param>
         public CrawlPresenter(ICrawlView view) : base(view)
         {
+            this._logoPath = Directory.GetCurrentDirectory() + @"\image\logo\";
         }
 
         //如果使用Inject则添加该属性
@@ -59,7 +64,9 @@ namespace SpiderPresenters
             string url = ConfigurationManager.AppSettings["BrandsUrl"];
             Task.Run(() =>
             {
-                var task = SpiderRequest.DownloadString(url);
+                #region 品牌 
+
+                var task = url.GetStringAsync();
                 task.Wait();
                 string brandStr = task.Result.Substring(14, task.Result.Length - 15);
                 JObject objJObject = (JObject) JsonConvert.DeserializeObject(brandStr);
@@ -88,23 +95,36 @@ namespace SpiderPresenters
                             AddTime = DateTime.Now,
                             BrandName = brand.name,
                             TagName = valuePair.Key,
-                            Url = brand.url,
+                            Url = ConfigurationManager.AppSettings["Domain"] + brand.url,
                             Rid = brand.id
                         })
                     .ToList();
+
+                #endregion
+
                 if (listBrands.Count > 0)
                 {
                     CarBrandBusiness.ShowInfoEvent += CarBrandBusiness_ShowDataEvent;
                     var parallelResult = Parallel.ForEach(listBrands, carBrand =>
-                    { 
+                    {
+                        var replaceUrl = ConfigurationManager.AppSettings["LogoUrl"].ToString()
+                            .Replace("{0}", carBrand.Rid.ToString());
+                        Task.Run(() => replaceUrl.DownloadFileAsync(this._logoPath)).ContinueWith(downImageTask =>
+                        {
+                            carBrand.BrandLogo = $"/Upload/logo/{Path.GetFileName(downImageTask.Result)}";
+                            CarBrandBusiness.Insert(carBrand); 
+                        });
+
+                        #region 车型 
+
                         var modelTask =
-                            SpiderRequest.DownloadString(
-                                $"{ConfigurationManager.AppSettings["BrandsUrl"]}&pagetype=masterbrand&objid={carBrand.Rid}");
+                            $"{ConfigurationManager.AppSettings["BrandsUrl"]}&pagetype=masterbrand&objid={carBrand.Rid}"
+                                .GetStringAsync();
                         modelTask.Wait();
                         string modelStr = modelTask.Result.Substring(14, modelTask.Result.Length - 15);
                         JObject modelJObject = (JObject) JsonConvert.DeserializeObject(modelStr);
                         Dictionary<string, object> modelDictionary =
-                            JsonConvert.DeserializeObject<Dictionary<string, object>>(modelJObject["brand"].ToString());  
+                            JsonConvert.DeserializeObject<Dictionary<string, object>>(modelJObject["brand"].ToString());
                         IList<CarModel> carModels = new List<CarModel>();
                         JArray array = JArray.FromObject(modelDictionary[carBrand.TagName]);
                         foreach (var token in array)
@@ -133,7 +153,7 @@ namespace SpiderPresenters
                                         {
                                             BrandId = carBrand.Id,
                                             ModelName = child["name"].ToString(),
-                                            Factory =carBrand.BrandName,
+                                            Factory = carBrand.BrandName,
                                             LinkUrl = $"{ConfigurationManager.AppSettings["Domain"]}{child["url"]}",
                                             AddTime = DateTime.Now,
                                         });
@@ -142,10 +162,13 @@ namespace SpiderPresenters
                                 break;
                             }
                         }
+
+                        #endregion
+
                         if (carModels.Count > 0)
                         {
-                            
-                        } 
+                            Task.Run(() => { Parallel.ForEach(carModels, model => { }); });
+                        }
                     });
                     if (parallelResult.IsCompleted)
                     {

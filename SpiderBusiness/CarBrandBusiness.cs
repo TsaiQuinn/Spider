@@ -33,7 +33,27 @@ namespace SpiderBusiness
         /// <returns>返回ID</returns>
         public int Insert(CarBrand modelCarBrand)
         {
-            return CarBrandDataAccess.Insert(modelCarBrand);
+            int result = 0;
+            var brands = this.QueryList(e => e.TagName == modelCarBrand.TagName && e.Rid == modelCarBrand.Rid &&
+                                             e.Url == modelCarBrand.Url);
+            if (brands.Count == 1)
+            {
+                brands[0].BrandLogo = modelCarBrand.BrandLogo;
+                brands[0].BrandName = modelCarBrand.BrandName;
+                brands[0].AddTime = DateTime.Now;
+                this.Update(brands[0]);
+                if (brands[0].Id != null) result = brands[0].Id.Value;
+            }
+            else
+            {
+                result = CarBrandDataAccess.Insert(modelCarBrand);
+            }
+            ShowInfoEvent?.Invoke(this, new ViewModelEventArg
+            {
+                Brand = brands.Count > 0 ? brands[0] : modelCarBrand,
+                Type = brands.Count > 0 ? 0 : 1
+            });
+            return result;
         }
 
         public void Delete(CarBrand model)
@@ -67,25 +87,7 @@ namespace SpiderBusiness
             {
                 foreach (var brand in list)
                 {
-                    brand.Url = SpiderCommon.SpiderConfig.GetConfigValue("Domain") +
-                                brand.Url;
-                    var brands = this.QueryList(e => e.TagName == brand.TagName && e.Rid == brand.Rid &&
-                                                     e.Url == brand.Url);
-                    if (brands.Count == 1)
-                    {
-                        brands[0].BrandName = brand.BrandName;
-                        brands[0].AddTime = DateTime.Now;
-                        this.Update(brands[0]);
-                    }
-                    else
-                    {
-                        this.Insert(brand);
-                    }
-                    ShowInfoEvent?.Invoke(this, new ViewModelEventArg
-                    {
-                        Brand = brands.Count > 0 ? brands[0] : brand,
-                        Type = brands.Count > 0 ? 0 : 1
-                    }); 
+                    Insert(brand);
                 }
             }
             return true;

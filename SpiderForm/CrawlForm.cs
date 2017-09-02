@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using SpiderIView;
 using SpiderModel.Models;
@@ -10,8 +12,8 @@ namespace SpiderForm
         public CrawlForm()
         {
             InitializeComponent();
-            ShowAction = View_ShowEvent;
-        }
+            ShowAction = View_ShowEvent; 
+        } 
 
         /// <summary>
         ///采集品牌事件
@@ -26,7 +28,7 @@ namespace SpiderForm
         /// <summary>
         /// 界面显示
         /// </summary>
-        public Action<ViewModelEventArg> ShowAction { get; set; }
+        public Action<ViewModelEventArg> ShowAction { get; set; } 
 
         /// <summary>
         /// 界面显示
@@ -47,6 +49,10 @@ namespace SpiderForm
                 this.labelBrandInsert.Text = $@"新增:{int.Parse(labelBrandInsert.Text.Split(':')[1]) + 1}";
             }
             this.labelBrandName.Text = arg.Brand.BrandName;
+            BackgroundImageLayout = ImageLayout.Center;
+            string logo =
+                $"{Directory.GetCurrentDirectory()}{arg.Brand.BrandLogo.Replace("Upload", "image").Replace("/","\\")}";
+            BackgroundImage = Image.FromFile(logo);
         }
 
         /// <summary>
@@ -56,7 +62,7 @@ namespace SpiderForm
         /// <param name="args"></param>
         private void CarBrandButton_Click(object sender, EventArgs args)
         {
-            PickBrandEvent?.Invoke(sender, null); 
+            PickBrandEvent?.Invoke(sender, null);
         }
 
         /// <summary>

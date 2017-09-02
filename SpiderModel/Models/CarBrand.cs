@@ -52,6 +52,6 @@ namespace SpiderModel.Models
         /// <summary>
         /// 车型
         /// </summary>
-        public virtual IList<CarModel> CarModels { get; set; }
+        public virtual ISet<CarModel> CarModels { get; set; }
     }
 }

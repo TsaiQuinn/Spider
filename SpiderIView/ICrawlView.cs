@@ -27,6 +27,6 @@ namespace SpiderIView
         /// <summary>
         /// 界面显示
         /// </summary>
-        Action<ViewModelEventArg> ShowAction { get; set; }
+        Action<ViewModelEventArg> ShowAction { get; set; } 
     }
 }
