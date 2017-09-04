@@ -56,6 +56,14 @@
     <Reference Include="DevExpress.XtraGrid.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraLayout.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraPrinting.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="Flurl, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Flurl.2.4.0\lib\net40\Flurl.dll</HintPath>
+    </Reference>
+    <Reference Include="Flurl.Http, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Flurl.Http.1.2.0\lib\net45\Flurl.Http.dll</HintPath>
+    </Reference>
     <Reference Include="Iesi.Collections, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\Iesi.Collections.4.0.2\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
@@ -104,6 +112,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Numerics" />
@@ -194,6 +203,10 @@
     <ProjectReference Include="..\SpiderBusiness\SpiderBusiness.csproj">
       <Project>{A7A7C805-A6EE-4AB6-82F6-5F4D4757EF64}</Project>
       <Name>SpiderBusiness</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpiderCommon\SpiderCommon.csproj">
+      <Project>{270cbe3d-0f53-4de4-8bc2-a5d59dee96b7}</Project>
+      <Name>SpiderCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\SpiderDataAccess\SpiderDataAccess.csproj">
       <Project>{221560DC-D47C-4A49-B66B-D8AA3E35D222}</Project>

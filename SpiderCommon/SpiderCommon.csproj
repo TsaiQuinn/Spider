@@ -60,6 +60,8 @@
     <Compile Include="Ioc\AppNinjectModule .cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpiderConfig.cs" />
+    <Compile Include="SpiderFile.cs" />
+    <Compile Include="SpiderLogger.cs" />
     <Compile Include="SpiderRequest.cs" />
   </ItemGroup>
   <ItemGroup>

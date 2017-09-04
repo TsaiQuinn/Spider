@@ -15,6 +15,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Flurl;
 using Flurl.Http;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
@@ -62,13 +63,12 @@ namespace SpiderPresenters
         private void OnPickBrand(object sender, EventArgs e)
         {
             string url = ConfigurationManager.AppSettings["BrandsUrl"];
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 #region 品牌 
 
-                var task = url.GetStringAsync();
-                task.Wait();
-                string brandStr = task.Result.Substring(14, task.Result.Length - 15);
+                string task = await url.GetStringAsync();
+                string brandStr = task.Substring(14, task.Length - 15);
                 JObject objJObject = (JObject) JsonConvert.DeserializeObject(brandStr);
                 Dictionary<string, object> resultDictionary =
                     JsonConvert.DeserializeObject<Dictionary<string, object>>(objJObject["brand"].ToString());
@@ -109,11 +109,30 @@ namespace SpiderPresenters
                     {
                         var replaceUrl = ConfigurationManager.AppSettings["LogoUrl"].ToString()
                             .Replace("{0}", carBrand.Rid.ToString());
-                        Task.Run(() => replaceUrl.DownloadFileAsync(this._logoPath)).ContinueWith(downImageTask =>
+                        SpiderFile.DownImage(replaceUrl, this._logoPath, $"/Upload/logo/", dataBasePath =>
                         {
-                            carBrand.BrandLogo = $"/Upload/logo/{Path.GetFileName(downImageTask.Result)}";
-                            CarBrandBusiness.Insert(carBrand); 
+                            carBrand.BrandLogo = dataBasePath;
+                            return CarBrandBusiness.Insert(carBrand);
                         });
+
+//                        var indexOf = replaceUrl.LastIndexOf("/", StringComparison.Ordinal);
+//                        string logo = replaceUrl.Substring(indexOf + 1);
+//                        if (!File.Exists(this._logoPath + logo))
+//                        {
+//                            Task.Run(async () => await replaceUrl.DownloadFileAsync(this._logoPath)).ContinueWith(
+//                                downImageTask =>
+//                                {
+//                                    carBrand.BrandLogo = $"/Upload/logo/{Path.GetFileName(downImageTask.Result)}";
+//                                    CarBrandBusiness.Insert(carBrand);
+//                                }).LogExceptions();
+//                        }
+//                        else
+//                        {
+//                            
+//                            carBrand.BrandLogo = $"/Upload/logo/{logo}";
+//                            CarBrandBusiness.Insert(carBrand); 
+//                        } 
+
 
                         #region 车型 
 
@@ -179,7 +198,7 @@ namespace SpiderPresenters
                 {
                     View.ShowMessage("没有获取到品牌", "提示");
                 }
-            });
+            }).LogExceptions();
         }
 
         /// <summary>

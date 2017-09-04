@@ -54,25 +54,25 @@ namespace SpiderForm
                 $"{Directory.GetCurrentDirectory()}{arg.Brand.BrandLogo.Replace("Upload", "image").Replace("/","\\")}";
             BackgroundImage = Image.FromFile(logo);
         }
-
         /// <summary>
         ///     采集品牌
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void CarBrandButton_Click(object sender, EventArgs args)
+        /// <param name="e"></param>
+        private void carBrandButton_Click(object sender, EventArgs e)
         {
             PickBrandEvent?.Invoke(sender, null);
+//            carBrandButton.Enabled = false;
         }
-
         /// <summary>
         ///     采集车型
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CarModelButton_Click(object sender, EventArgs e)
+        private void carModelButton_Click_1(object sender, EventArgs e)
         {
             PickModelEvent?.Invoke(sender, e);
+//            carModelButton.Enabled = false;
         }
     }
 }
