@@ -7,10 +7,10 @@
 
 #endregion
 
-using SpiderIDataAccess;
+using SpiderIDataAccess.INhibernateDataAccess;
 using SpiderModel.Models;
 
-namespace SpiderDataAccess
+namespace SpiderDataAccess.NhibernateDataAccess
 {
     public class CarBrandDataAccess : BaseDataAccess<CarBrand>, ICarBrandDataAccess
     {

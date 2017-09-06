@@ -35,8 +35,12 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICarBrandBusiness.cs" />
-    <Compile Include="ICarModelBusiness.cs" />
+    <Compile Include="INhibernateBusiness\ICarBrandBusiness.cs" />
+    <Compile Include="IDapperBusiness\ICarBrandBusiness.cs" />
+    <Compile Include="IDapperBusiness\ICarBusiness.cs" />
+    <Compile Include="INhibernateBusiness\ICarModelBusiness.cs" />
+    <Compile Include="IDapperBusiness\ICarModelBusiness.cs" />
+    <Compile Include="IDapperBusiness\ICarSeriesBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

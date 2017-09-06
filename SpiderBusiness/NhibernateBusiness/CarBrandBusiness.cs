@@ -12,9 +12,11 @@ using System.Collections.Generic;
 using Ninject;
 using SpiderIBusiness;
 using SpiderIDataAccess;
+using SpiderIDataAccess.INhibernateDataAccess;
 using SpiderModel.Models;
+using SpiderIBusiness.INhibernateBusiness;
 
-namespace SpiderBusiness
+namespace SpiderBusiness.NhibernateBusiness
 {
     public class CarBrandBusiness : ICarBrandBusiness
     {

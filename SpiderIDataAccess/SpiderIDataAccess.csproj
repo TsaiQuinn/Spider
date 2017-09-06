@@ -35,7 +35,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICarBrandDataAccess.cs" />
+    <Compile Include="INhibernateDataAccess\ICarBrandDataAccess.cs" />
+    <Compile Include="IDapperDataAccess\ICarBrandDataAccess.cs" />
+    <Compile Include="IDapperDataAccess\ICarDataAccess.cs" />
+    <Compile Include="IDapperDataAccess\ICarModelDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -44,5 +47,6 @@
       <Name>SpiderModel</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

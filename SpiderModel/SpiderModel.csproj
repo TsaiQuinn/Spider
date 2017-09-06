@@ -31,10 +31,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DapperExtensions">
+      <HintPath>..\packages\DapperExtensions.1.6.3\lib\net45\DapperExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\CarBrandEntity.cs" />
+    <Compile Include="Entity\CarBrandEntityMapper.cs" />
+    <Compile Include="Entity\CarModelEntity.cs" />
+    <Compile Include="Entity\CarModelEntityMapper.cs" />
+    <Compile Include="Entity\CarSeriesEntity.cs" />
+    <Compile Include="Entity\CarSeriesEntityMapper.cs" />
+    <Compile Include="Entity\ViewModelArg.cs" />
     <Compile Include="Models\Car.cs" />
     <Compile Include="Models\CarBrand.cs" />
     <Compile Include="Models\ViewModelEventArg.cs" />

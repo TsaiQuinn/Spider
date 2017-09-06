@@ -3,6 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using SpiderIView;
+using SpiderModel.Entity;
 using SpiderModel.Models;
 
 namespace SpiderForm
@@ -12,35 +13,36 @@ namespace SpiderForm
         public CrawlForm()
         {
             InitializeComponent();
-            ShowAction = View_ShowEvent; 
-        } 
+            ShowInfoAction = ShowInfo;
+        }
+
 
         /// <summary>
         ///采集品牌事件
         /// </summary>
-        public event EventHandler PickBrandEvent;
+        public event EventHandler PickBrandEventHandler;
 
         /// <summary>
         /// 采集车型事件
         /// </summary>
-        public event EventHandler PickModelEvent;
+        public event EventHandler PickModelEventHandler;
 
         /// <summary>
         /// 界面显示
         /// </summary>
-        public Action<ViewModelEventArg> ShowAction { get; set; } 
+        public Action<ViewModelArg<Car>> ShowInfoAction { get; set; }
 
         /// <summary>
         /// 界面显示
         /// </summary> 
-        private void View_ShowEvent(ViewModelEventArg arg)
+        private void ShowInfo(ViewModelArg<Car> viewModelArg)
         {
             if (this.InvokeRequired)
             {
-                BeginInvoke(new Action<ViewModelEventArg>(View_ShowEvent), arg);
+                BeginInvoke(new Action<ViewModelArg<Car>>(ShowInfo), viewModelArg);
                 return;
             }
-            if (arg.Type == 0)
+            if (viewModelArg.Type == 0)
             {
                 this.labelBrandUpdate.Text = $@"更新:{int.Parse(labelBrandUpdate.Text.Split(':')[1]) + 1}";
             }
@@ -48,12 +50,14 @@ namespace SpiderForm
             {
                 this.labelBrandInsert.Text = $@"新增:{int.Parse(labelBrandInsert.Text.Split(':')[1]) + 1}";
             }
-            this.labelBrandName.Text = arg.Brand.BrandName;
+            CarBrandEntity arg = (CarBrandEntity) viewModelArg.Car;
+            this.labelBrandName.Text = arg.BrandName;
             BackgroundImageLayout = ImageLayout.Center;
             string logo =
-                $"{Directory.GetCurrentDirectory()}{arg.Brand.BrandLogo.Replace("Upload", "image").Replace("/","\\")}";
+                $"{Directory.GetCurrentDirectory()}{arg.BrandLogo.Replace("Upload", "image").Replace("/", "\\")}";
             BackgroundImage = Image.FromFile(logo);
         }
+
         /// <summary>
         ///     采集品牌
         /// </summary>
@@ -61,9 +65,10 @@ namespace SpiderForm
         /// <param name="e"></param>
         private void carBrandButton_Click(object sender, EventArgs e)
         {
-            PickBrandEvent?.Invoke(sender, null);
+            PickBrandEventHandler?.Invoke(sender, null);
 //            carBrandButton.Enabled = false;
         }
+
         /// <summary>
         ///     采集车型
         /// </summary>
@@ -71,7 +76,7 @@ namespace SpiderForm
         /// <param name="e"></param>
         private void carModelButton_Click_1(object sender, EventArgs e)
         {
-            PickModelEvent?.Invoke(sender, e);
+            PickModelEventHandler?.Invoke(sender, e);
 //            carModelButton.Enabled = false;
         }
     }

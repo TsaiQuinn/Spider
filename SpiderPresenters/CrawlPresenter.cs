@@ -23,7 +23,9 @@ using Newtonsoft.Json.Linq;
 using Ninject;
 using SpiderCommon;
 using SpiderIBusiness;
+using SpiderIBusiness.IDapperBusiness;
 using SpiderIView;
+using SpiderModel.Entity;
 using SpiderModel.Models;
 
 namespace SpiderPresenters
@@ -42,7 +44,7 @@ namespace SpiderPresenters
         }
 
         //如果使用Inject则添加该属性
-        //[Inject] 
+        //[Inject]   
         public ICarBrandBusiness CarBrandBusiness { get; set; }
 
         /// <summary>
@@ -51,8 +53,8 @@ namespace SpiderPresenters
         protected override void ViewLoad()
         {
             View.Load += OnViewLoad;
-            View.PickBrandEvent += OnPickBrand;
-            View.PickModelEvent += OnPickModel;
+            View.PickBrandEventHandler += OnPickBrand;
+            View.PickModelEventHandler += OnPickModel;
         }
 
         /// <summary>
@@ -84,13 +86,13 @@ namespace SpiderPresenters
                         num = 0
                     }
                 };
-                IList<CarBrand> listBrands = (from valuePair in resultDictionary
+                IList<CarBrandEntity> listBrands = (from valuePair in resultDictionary
                         let result = JsonConvert.DeserializeAnonymousType(valuePair.Value.ToString(), definition)
                         from brand in result
                         where !string.IsNullOrEmpty(brand.url)
                         let index = brand.url.IndexOf("mb_", StringComparison.Ordinal)
                         let temp = brand.url.Substring(index + 3, brand.url.Length - index - 4)
-                        select new CarBrand
+                        select new CarBrandEntity
                         {
                             AddTime = DateTime.Now,
                             BrandName = brand.name,
@@ -104,34 +106,22 @@ namespace SpiderPresenters
 
                 if (listBrands.Count > 0)
                 {
-                    CarBrandBusiness.ShowInfoEvent += CarBrandBusiness_ShowDataEvent;
-                    var parallelResult = Parallel.ForEach(listBrands, carBrand =>
+                    CarBrandBusiness.ShowInfoEventHandler += CarBrandBusiness_ShowInfoEventHandler;
+//                    var parallelResult = Parallel.ForEach(listBrands, carBrand =>
+//                    {
+                    foreach (var carBrand in listBrands)
                     {
+                        #region 并行处理
+
                         var replaceUrl = ConfigurationManager.AppSettings["LogoUrl"].ToString()
                             .Replace("{0}", carBrand.Rid.ToString());
-                        SpiderFile.DownImage(replaceUrl, this._logoPath, $"/Upload/logo/", dataBasePath =>
+                        SpiderFile.DownImage(replaceUrl, this._logoPath, "/Upload/logo/", dataBasePath =>
                         {
                             carBrand.BrandLogo = dataBasePath;
-                            return CarBrandBusiness.Insert(carBrand);
+                            return CarBrandBusiness.Insert(carBrand,
+                                entity => entity.TagName == carBrand.TagName && entity.Rid == carBrand.Rid &&
+                                          entity.Url == carBrand.Url);
                         });
-
-//                        var indexOf = replaceUrl.LastIndexOf("/", StringComparison.Ordinal);
-//                        string logo = replaceUrl.Substring(indexOf + 1);
-//                        if (!File.Exists(this._logoPath + logo))
-//                        {
-//                            Task.Run(async () => await replaceUrl.DownloadFileAsync(this._logoPath)).ContinueWith(
-//                                downImageTask =>
-//                                {
-//                                    carBrand.BrandLogo = $"/Upload/logo/{Path.GetFileName(downImageTask.Result)}";
-//                                    CarBrandBusiness.Insert(carBrand);
-//                                }).LogExceptions();
-//                        }
-//                        else
-//                        {
-//                            
-//                            carBrand.BrandLogo = $"/Upload/logo/{logo}";
-//                            CarBrandBusiness.Insert(carBrand); 
-//                        } 
 
 
                         #region 车型 
@@ -188,11 +178,18 @@ namespace SpiderPresenters
                         {
                             Task.Run(() => { Parallel.ForEach(carModels, model => { }); });
                         }
-                    });
-                    if (parallelResult.IsCompleted)
-                    {
-                        CarBrandBusiness.ShowInfoEvent -= CarBrandBusiness_ShowDataEvent;
+
+                        #endregion
                     }
+
+
+                    //                    });
+
+
+                    //                    if (parallelResult.IsCompleted)
+                    //                    {
+                    CarBrandBusiness.ShowInfoEventHandler -= CarBrandBusiness_ShowInfoEventHandler;
+//                    }
                 }
                 else
                 {
@@ -206,9 +203,13 @@ namespace SpiderPresenters
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CarBrandBusiness_ShowDataEvent(object sender, ViewModelEventArg e)
+        private void CarBrandBusiness_ShowInfoEventHandler(object sender, ViewModelArg<CarBrandEntity> e)
         {
-            View.ShowAction?.Invoke(e);
+            View.ShowInfoAction?.Invoke(new ViewModelArg<Car>
+            {
+                Car = e.Car,
+                Type = e.Type
+            });
         }
 
         /// <summary>

@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using SpiderIBusiness;
+using SpiderIBusiness.INhibernateBusiness;
 using SpiderIDataAccess;
+using SpiderIDataAccess.INhibernateDataAccess;
 using SpiderModel.Models;
 
-namespace SpiderBusiness
+namespace SpiderBusiness.NhibernateBusiness
 {
     public class CarModelBusiness :ICarModelBusiness
     {

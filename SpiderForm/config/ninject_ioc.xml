@@ -1,9 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<module name="SpiderForm">
+<module name="SpiderForm"> 
+  <!-- 成功 -->
   <bind service="SpiderIView.ICrawlView, SpiderIView" to="SpiderForm.CrawlForm, SpiderForm" />
   <bind service="SpiderIBusiness.ICarBrandBusiness, SpiderIBusiness"
         to="SpiderBusiness.CarBrandBusiness, SpiderBusiness" />
   <bind service="SpiderIDataAccess.ICarBrandDataAccess,SpiderIDataAccess"
         to="SpiderDataAccess.CarBrandDataAccess,SpiderDataAccess" />
+  <!-- 成功 -->
+
+
+  <!--  -->
+  <bind service="SpiderIView.ICrawlView, SpiderIView" to="SpiderForm.CrawlForm, SpiderForm" />
+  
+  <bind service="SpiderIBusiness.IDapperBusiness.ICarBrandBusiness, SpiderIBusiness"
+        to="SpiderBusiness.DapperBusiness.CarBrandBusiness, SpiderBusiness" />
+  
+  <bind service="SpiderIDataAccess.IDapperDataAccess.ICarBrandDataAccess,SpiderIDataAccess"
+        to="SpiderDataAccess.DapperDataAccess.CarBrandDataAccess,SpiderDataAccess" />
+  <!--  -->
+  
 </module>

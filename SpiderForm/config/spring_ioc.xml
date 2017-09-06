@@ -13,16 +13,31 @@
 <!--    </context>-->
 <objects xmlns="http://www.springframework.net">
   <object name="CrawlForm" type="SpiderForm.CrawlForm,SpiderForm" />
-  <object name="CarBrandBusiness" type="SpiderBusiness.CarBrandBusiness,SpiderBusiness">
-    <property name="CarBrandDataAccess" ref="CarBrandDataAccess"></property>
+
+  <!-- 成功 -->
+<!--  <object name="CarBrandBusiness" type="SpiderBusiness.CarBrandBusiness,SpiderBusiness">-->
+<!--    <property name="CarBrandDataAccess" ref="CarBrandDataAccess"></property>-->
+<!--  </object> -->
+<!--  <object name="CarBrandDataAccess" type="SpiderDataAccess.CarBrandDataAccess,SpiderDataAccess" /> -->
+<!--  <object name="CrawlPresenter" type="SpiderPresenters.CrawlPresenter,SpiderPresenters">-->
+<!--    <constructor-arg index="0" ref="CrawlForm" />-->
+<!--    <property name="CarBrandBusiness" ref="CarBrandBusiness" />-->
+<!--  </object>-->
+  <!-- 成功-->
+
+  <!-- 失败 -->
+  <object name="CarBrandBusiness" type="SpiderBusiness.DapperBusiness.CarBrandBusiness,SpiderBusiness.DapperBusiness"  parent="CarBusiness">
+    <property name="CarDataAccess" ref="CarDataAccess"/>
   </object>
-  <!--      <object name="ICarBrandBusiness" type="SpiderIBusiness.ICarBrandBusiness,SpiderIBusiness"/>-->
-  <object name="CarBrandDataAccess" type="SpiderDataAccess.CarBrandDataAccess,SpiderDataAccess" />
-  <!--      <object name="ICarBrandDataAccess" type="SpiderIDataAccess.ICarBrandDataAccess,SpiderIDataAccess"/>-->
+  <object name="CarBusiness" type="SpiderBusiness.DapperBusiness.CarBusiness,SpiderBusiness.DapperBusiness"/>
+  <object name="CarDataAccess" type="SpiderDataAccess.DapperDataAccess.CarBrandDataAccess,SpiderDataAccess.DapperDataAccess" />
   <object name="CrawlPresenter" type="SpiderPresenters.CrawlPresenter,SpiderPresenters">
     <constructor-arg index="0" ref="CrawlForm" />
     <property name="CarBrandBusiness" ref="CarBrandBusiness" />
   </object>
+  <!-- 失败-->
+
+ 
 </objects>
 <!--  </spring>-->
 <!--</configuration>-->

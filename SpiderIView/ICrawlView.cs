@@ -9,6 +9,7 @@
 
 using SpiderModel.Models;
 using System;
+using SpiderModel.Entity;
 
 namespace SpiderIView
 {
@@ -17,16 +18,16 @@ namespace SpiderIView
         /// <summary>
         ///     采集品牌
         /// </summary>
-        event EventHandler PickBrandEvent;
+        event EventHandler PickBrandEventHandler;
 
         /// <summary>
         /// 采集车型
         /// </summary>
-        event EventHandler PickModelEvent;
+        event EventHandler PickModelEventHandler;
 
         /// <summary>
         /// 界面显示
         /// </summary>
-        Action<ViewModelEventArg> ShowAction { get; set; } 
+        Action<ViewModelArg<Car>> ShowInfoAction { get; set; }
     }
 }

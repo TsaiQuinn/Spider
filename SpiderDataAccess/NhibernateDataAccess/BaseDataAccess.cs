@@ -11,13 +11,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NHibernate;
-using NHibernate.Linq;
+using NHibernate.Linq; 
 
-namespace SpiderDataAccess
+namespace SpiderDataAccess.NhibernateDataAccess
 {
     public class BaseDataAccess<T> where T : class
-    { 
-
+    {  
         /// <summary>
         /// 新增
         /// </summary>

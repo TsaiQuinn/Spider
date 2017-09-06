@@ -41,8 +41,12 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CarBrandBusiness.cs" />
-    <Compile Include="CarModelBusiness.cs" />
+    <Compile Include="DapperBusiness\CarBrandBusiness.cs" />
+    <Compile Include="DapperBusiness\CarModelBusiness.cs" />
+    <Compile Include="DapperBusiness\CarSeriesBusiness.cs" />
+    <Compile Include="NhibernateBusiness\CarBrandBusiness.cs" />
+    <Compile Include="NhibernateBusiness\CarModelBusiness.cs" />
+    <Compile Include="DapperBusiness\CarBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

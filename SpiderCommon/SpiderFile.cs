@@ -34,7 +34,7 @@ namespace SpiderCommon
                 {
                     File.Delete(diskPath + logo);
                 }
-                Task.Run(async () => await url.DownloadFileAsync(diskPath)).ContinueWith(
+                Task.Run(() => url.DownloadFileAsync(diskPath)).ContinueWith(
                     downImageTask => { func?.Invoke(dataBasePath + logo); }).LogExceptions();
             }
             else

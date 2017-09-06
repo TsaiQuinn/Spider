@@ -11,7 +11,7 @@ using HibernatingRhinos.Profiler.Appender.NHibernate;
 using NHibernate;
 using NHibernate.Cfg;
 
-namespace SpiderDataAccess
+namespace SpiderDataAccess.NhibernateDataAccess
 {
     public static class NHibernateHelper
     {
