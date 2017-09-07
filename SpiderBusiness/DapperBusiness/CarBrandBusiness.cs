@@ -5,6 +5,7 @@
 // Create Time:16:19 
 #endregion
 
+using Ninject;
 using SpiderIBusiness.IDapperBusiness;
 using SpiderIDataAccess.IDapperDataAccess;
 using SpiderModel.Entity;
@@ -16,5 +17,8 @@ namespace SpiderBusiness.DapperBusiness
         public CarBrandBusiness()
         {
         }
+
+        [Inject]
+        public override ICarDataAccess<CarBrandEntity> CarDataAccess { get; set; }
     }
 }

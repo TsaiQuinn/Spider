@@ -5,13 +5,16 @@
 // Create Time:11:09 
 #endregion
 
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using SpiderIDataAccess.IDapperDataAccess;
 using SpiderModel.Entity;
 using SpiderModel.Models;
 
 namespace SpiderDataAccess.DapperDataAccess
 {
-    public class CarSeriesDataAccess : DapperDataAccess<CarSeriesEntity>, ICarDataAccess<CarSeriesEntity>
+    public class CarSeriesDataAccess : DapperDataAccess<CarSeriesEntity>, ICarSeriesDataAccess
     {
         /// <summary>
         /// 删除
@@ -21,6 +24,6 @@ namespace SpiderDataAccess.DapperDataAccess
         public bool Delete(CarSeriesEntity car)
         {
            return base.Delete(car);
-        }
+        } 
     }
 }

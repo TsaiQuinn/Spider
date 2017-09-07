@@ -12,9 +12,11 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using DapperExtensions;
 using Flurl;
 using Flurl.Http;
 using HtmlAgilityPack;
@@ -44,8 +46,8 @@ namespace SpiderPresenters
         }
 
         //如果使用Inject则添加该属性
-        //[Inject]   
-        public ICarBrandBusiness CarBrandBusiness { get; set; }
+        [Inject]
+        public ICarBusiness<CarBrandEntity> CarBrandBusiness { get; set; }
 
         /// <summary>
         /// 窗体加载
@@ -118,9 +120,13 @@ namespace SpiderPresenters
                         SpiderFile.DownImage(replaceUrl, this._logoPath, "/Upload/logo/", dataBasePath =>
                         {
                             carBrand.BrandLogo = dataBasePath;
-                            return CarBrandBusiness.Insert(carBrand,
-                                entity => entity.TagName == carBrand.TagName && entity.Rid == carBrand.Rid &&
-                                          entity.Url == carBrand.Url);
+                            var dic = new Dictionary<Expression<Func<CarBrandEntity, object>>, object>
+                            {
+                                {entity => entity.Rid, Operator.Eq},
+//                                {entity => entity.TagName, Operator.Eq},
+//                                {entity => entity.Url, Operator.Eq}
+                            };
+                            return CarBrandBusiness.Insert(carBrand, dic);
                         });
 
 
@@ -176,7 +182,7 @@ namespace SpiderPresenters
 
                         if (carModels.Count > 0)
                         {
-                            Task.Run(() => { Parallel.ForEach(carModels, model => { }); });
+//                            Task.Run(() => { Parallel.ForEach(carModels, model => { }); });
                         }
 
                         #endregion

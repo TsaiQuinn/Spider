@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using DapperExtensions;
 
 namespace SpiderIDataAccess.IDapperDataAccess
 {
@@ -44,9 +45,9 @@ namespace SpiderIDataAccess.IDapperDataAccess
         /// <summary>
         /// 查询列表
         /// </summary>
-        /// <param name="expression">表达式</param>
-        /// <param name="parameters">参数</param>
+        /// <param name="expressions">表达式</param>
+        /// <param name="parameter">参数</param>
         /// <returns>返回列表</returns>
-        IList<T> QueryList(Expression<Func<T, object>> expression, object parameters);
+        IList<T> QueryList(Dictionary<Expression<Func<T, object>>, object> expressions, object parameter);
     }
 }

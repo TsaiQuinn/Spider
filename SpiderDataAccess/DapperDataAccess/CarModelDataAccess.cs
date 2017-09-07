@@ -8,7 +8,9 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq.Expressions;
 using DapperExtensions;
 using SpiderIDataAccess.IDapperDataAccess;
 using SpiderModel.Entity;
@@ -16,7 +18,7 @@ using SpiderModel.Models;
 
 namespace SpiderDataAccess.DapperDataAccess
 {
-    public class CarModelDataAccess : DapperDataAccess<CarModelEntity>, ICarDataAccess<CarModelEntity>
+    public class CarModelDataAccess : DapperDataAccess<CarModelEntity>, ICarModelDataAccess
     {
         /// <summary>
         /// 删除
@@ -48,6 +50,6 @@ namespace SpiderDataAccess.DapperDataAccess
                 }
             });
             return result;
-        }
+        } 
     }
 }

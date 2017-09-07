@@ -2,11 +2,11 @@
 
 <module name="SpiderForm"> 
   <!-- 成功 -->
-  <bind service="SpiderIView.ICrawlView, SpiderIView" to="SpiderForm.CrawlForm, SpiderForm" />
-  <bind service="SpiderIBusiness.ICarBrandBusiness, SpiderIBusiness"
-        to="SpiderBusiness.CarBrandBusiness, SpiderBusiness" />
-  <bind service="SpiderIDataAccess.ICarBrandDataAccess,SpiderIDataAccess"
-        to="SpiderDataAccess.CarBrandDataAccess,SpiderDataAccess" />
+<!--  <bind service="SpiderIView.ICrawlView, SpiderIView" to="SpiderForm.CrawlForm, SpiderForm" />-->
+<!--  <bind service="SpiderIBusiness.ICarBrandBusiness, SpiderIBusiness"-->
+<!--        to="SpiderBusiness.CarBrandBusiness, SpiderBusiness" />-->
+<!--  <bind service="SpiderIDataAccess.ICarBrandDataAccess,SpiderIDataAccess"-->
+<!--        to="SpiderDataAccess.CarBrandDataAccess,SpiderDataAccess" />-->
   <!-- 成功 -->
 
 
@@ -18,6 +18,9 @@
   
   <bind service="SpiderIDataAccess.IDapperDataAccess.ICarBrandDataAccess,SpiderIDataAccess"
         to="SpiderDataAccess.DapperDataAccess.CarBrandDataAccess,SpiderDataAccess" />
+
+<!--  <bind service="SpiderIDataAccess.IDapperDataAccess.ICarBrandDataAccess,SpiderIDataAccess"-->
+<!--        to="SpiderDataAccess.DapperDataAccess.CarBrandDataAccess,SpiderDataAccess" />-->
   <!--  -->
   
 </module>

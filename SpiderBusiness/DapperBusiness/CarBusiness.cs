@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
+using DapperExtensions;
+using Ninject;
 using SpiderIBusiness.IDapperBusiness;
 using SpiderIDataAccess;
 using SpiderIDataAccess.IDapperDataAccess;
@@ -21,8 +23,8 @@ namespace SpiderBusiness.DapperBusiness
 {
     public class CarBusiness<T> : ICarBusiness<T> where T : class
     {
-        //        [Inject] 
-        public ICarDataAccess<T> CarDataAccess { get; set; }
+        [Inject]
+        public virtual ICarDataAccess<T> CarDataAccess { get; set; }
 
         /// <summary>
         /// 数据操作通知
@@ -33,12 +35,12 @@ namespace SpiderBusiness.DapperBusiness
         /// 新增
         /// </summary>
         /// <param name="car">实体对象</param>
-        /// <param name="expression">表达式</param>
+        /// <param name="expressions">表达式</param>
         /// <returns></returns>
-        public int Insert(T car, Expression<Func<T, object>> expression)
+        public int Insert(T car, Dictionary<Expression<Func<T, object>>, object> expressions)
         {
             int result = 0;
-            if (expression == null)
+            if (expressions == null)
             {
                 result = CarDataAccess.Insert(car);
                 ShowInfoEventHandler?.Invoke(this, new ViewModelArg<T>
@@ -49,7 +51,7 @@ namespace SpiderBusiness.DapperBusiness
             }
             else
             {
-                var carsList = this.QueryList(expression, car);
+                var carsList = this.QueryList(expressions, car);
                 if (carsList.Count == 1)
                 {
                     PropertyInfo info = typeof(T).GetProperty("Id");
@@ -97,7 +99,7 @@ namespace SpiderBusiness.DapperBusiness
         public T FindBy(object id)
         {
             return CarDataAccess.FindBy(id);
-        }
+        } 
 
         /// <summary>
         /// 查询列表
@@ -105,7 +107,7 @@ namespace SpiderBusiness.DapperBusiness
         /// <param name="expression">表达式</param>
         /// <param name="parameters">参数</param>
         /// <returns>返回列表</returns>
-        public IList<T> QueryList(Expression<Func<T, object>> expression, object parameters)
+        public IList<T> QueryList(Dictionary<Expression<Func<T, object>>, object> expression, object parameters)
         {
             return CarDataAccess.QueryList(expression, parameters);
         }

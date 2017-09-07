@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using DapperExtensions;
 using SpiderModel.Entity;
 
 namespace SpiderIBusiness.IDapperBusiness
@@ -24,9 +25,9 @@ namespace SpiderIBusiness.IDapperBusiness
         /// 新增
         /// </summary>
         /// <param name="car">实体对象</param>
-        /// <param name="expression">表达式</param>
+        /// <param name="expressions">表达式</param>
         /// <returns></returns>
-        int Insert(T car,Expression<Func<T, object>> expression);
+        int Insert(T car, Dictionary<Expression<Func<T, object>>, object> expressions);
 
         /// <summary>
         /// 删除
@@ -55,6 +56,6 @@ namespace SpiderIBusiness.IDapperBusiness
         /// <param name="expression">表达式</param>
         /// <param name="parameters">参数</param>
         /// <returns>返回列表</returns>
-        IList<T> QueryList(Expression<Func<T, object>> expression, object parameters);
+        IList<T> QueryList(Dictionary<Expression<Func<T, object>>, object> expression, object parameters);
     }
 }

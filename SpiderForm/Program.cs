@@ -3,6 +3,11 @@ using System.Windows.Forms;
 using DevExpress.Skins;
 using DevExpress.UserSkins;
 using Ninject;
+using SpiderBusiness.DapperBusiness;
+using SpiderDataAccess.DapperDataAccess;
+using SpiderIBusiness.IDapperBusiness;
+using SpiderIDataAccess.IDapperDataAccess;
+using SpiderIView;
 using SpiderModel.Entity;
 using SpiderPresenters;
 using Spring.Context.Support;
@@ -57,16 +62,16 @@ namespace SpiderForm
 
             #region 配置文件方式
 
-                        kernel.Load("config/ninject_ioc.xml");
+//                        kernel.Load("config/ninject_ioc.xml");
 
             #endregion
 
             #region 代码方式加载
 
-            //            kernel.Bind<ICrawlView>().To<CrawlForm>();
-            //            kernel.Bind<ICarBrandBusiness>().To<CarBrandBusiness>();
-            //            kernel.Bind<ICarBrandDataAccess>().To<CarBrandDataAccess>();
-            //            kernel.Bind<CrawlPresenter>().ToSelf();
+                        kernel.Bind<ICrawlView>().To<CrawlForm>();
+                        kernel.Bind<ICarBusiness<CarBrandEntity>>().To<CarBusiness<CarBrandEntity>>();
+                        kernel.Bind<ICarDataAccess<CarBrandEntity>>().To<DapperDataAccess<CarBrandEntity>>();
+                        kernel.Bind<CrawlPresenter>().ToSelf();
 
             #endregion
 
@@ -76,11 +81,13 @@ namespace SpiderForm
 
             #region Spring.NET方式配置
 
-//            var ctx = new XmlApplicationContext("config/spring_ioc.xml");
-//            var objectFactory = (IObjectFactory) ctx;
-//            var form = objectFactory.GetObject("CrawlPresenter") as CrawlPresenter;
+            //            var ctx = new XmlApplicationContext("config/spring_ioc.xml");
+            //            var objectFactory = (IObjectFactory) ctx;
+            //            var form = objectFactory.GetObject("CrawlPresenter") as CrawlPresenter;
 
             #endregion
+
+            #region Dapper
 
             DapperExtensions.DapperExtensions.SetMappingAssemblies(new[]
             {
@@ -89,6 +96,8 @@ namespace SpiderForm
                 typeof(CarSeriesEntityMapper).Assembly
             });
 
+            #endregion
+              
             Application.Run(form?.View as Form);
         }
     }

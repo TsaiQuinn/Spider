@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq.Expressions;
 using Dapper;
 using DapperExtensions;
 using NHibernate.Util;
@@ -19,7 +20,7 @@ using SpiderModel.Models;
 
 namespace SpiderDataAccess.DapperDataAccess
 {
-    public class CarBrandDataAccess : DapperDataAccess<CarBrandEntity>, ICarDataAccess<CarBrandEntity>
+    public class CarBrandDataAccess : DapperDataAccess<CarBrandEntity>, ICarBrandDataAccess
     {
         /// <summary>
         /// 删除
@@ -59,6 +60,6 @@ namespace SpiderDataAccess.DapperDataAccess
                 }
             });
             return result;
-        }
+        } 
     }
 }
