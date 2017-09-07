@@ -3,10 +3,10 @@ using System.Windows.Forms;
 using DevExpress.Skins;
 using DevExpress.UserSkins;
 using Ninject;
-using SpiderBusiness.DapperBusiness;
-using SpiderDataAccess.DapperDataAccess;
-using SpiderIBusiness.IDapperBusiness;
-using SpiderIDataAccess.IDapperDataAccess;
+using SpiderBusiness.NhibernateBusiness;
+using SpiderDataAccess.NhibernateDataAccess;
+using SpiderIBusiness.INhibernateBusiness;
+using SpiderIDataAccess.INhibernateDataAccess;
 using SpiderIView;
 using SpiderModel.Entity;
 using SpiderPresenters;
@@ -58,7 +58,7 @@ namespace SpiderForm
 
             #region Ninject 采用配置文件或者代码的方式进行注入
 
-                        IKernel kernel = new StandardKernel();
+            IKernel kernel = new StandardKernel();
 
             #region 配置文件方式
 
@@ -68,14 +68,16 @@ namespace SpiderForm
 
             #region 代码方式加载
 
-                        kernel.Bind<ICrawlView>().To<CrawlForm>();
-                        kernel.Bind<ICarBusiness<CarBrandEntity>>().To<CarBusiness<CarBrandEntity>>();
-                        kernel.Bind<ICarDataAccess<CarBrandEntity>>().To<DapperDataAccess<CarBrandEntity>>();
-                        kernel.Bind<CrawlPresenter>().ToSelf();
+            kernel.Bind<ICrawlView>().To<CrawlForm>();
+            //                        kernel.Bind<ICarBusiness<CarBrandEntity>>().To<CarBusiness<CarBrandEntity>>();
+            //                        kernel.Bind<ICarDataAccess<CarBrandEntity>>().To<BaseDataAccess<CarBrandEntity>>();
+            kernel.Bind<ICarBrandBusiness>().To<CarBrandBusiness>();
+            kernel.Bind<ICarBrandDataAccess>().To<CarBrandDataAccess>();
+            kernel.Bind<CrawlPresenter>().ToSelf();
 
             #endregion
 
-                        var form = kernel.Get<CrawlPresenter>();
+            var form = kernel.Get<CrawlPresenter>();
 
             #endregion
 
@@ -89,15 +91,15 @@ namespace SpiderForm
 
             #region Dapper
 
-            DapperExtensions.DapperExtensions.SetMappingAssemblies(new[]
-            {
-                typeof(CarBrandEntityMapper).Assembly,
-                typeof(CarModelEntityMapper).Assembly,
-                typeof(CarSeriesEntityMapper).Assembly
-            });
+//            DapperExtensions.DapperExtensions.SetMappingAssemblies(new[]
+//            {
+//                typeof(CarBrandEntityMapper).Assembly,
+//                typeof(CarModelEntityMapper).Assembly,
+//                typeof(CarSeriesEntityMapper).Assembly
+//            });
 
             #endregion
-              
+
             Application.Run(form?.View as Form);
         }
     }

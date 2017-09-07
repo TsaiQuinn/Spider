@@ -12,7 +12,7 @@ using SpiderModel.Models;
 
 namespace SpiderDataAccess.NhibernateDataAccess
 {
-    public class CarBrandDataAccess : BaseDataAccess<CarBrand>, ICarBrandDataAccess
-    {
+    public class CarBrandDataAccess : BaseDataAccess<CarBrandEntity>, ICarBrandDataAccess
+    { 
     }
 }

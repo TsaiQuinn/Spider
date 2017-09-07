@@ -44,11 +44,10 @@
     <Compile Include="Entity\CarModelEntityMapper.cs" />
     <Compile Include="Entity\CarSeriesEntity.cs" />
     <Compile Include="Entity\CarSeriesEntityMapper.cs" />
-    <Compile Include="Entity\ViewModelArg.cs" />
+    <Compile Include="ViewModelArg.cs" />
     <Compile Include="Models\Car.cs" />
-    <Compile Include="Models\CarBrand.cs" />
-    <Compile Include="Models\ViewModelEventArg.cs" />
-    <Compile Include="Models\CarModel.cs" />
+    <Compile Include="Models\CarBrandEntity.cs" />
+    <Compile Include="Models\CarModelEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

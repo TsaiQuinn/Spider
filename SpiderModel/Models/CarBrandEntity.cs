@@ -12,12 +12,8 @@ using System.Collections.Generic;
 
 namespace SpiderModel.Models
 {
-    public class CarBrand
-    {
-        /// <summary>
-        ///     主键ID
-        /// </summary>
-        public virtual int? Id { get; set; }
+    public class CarBrandEntity : Car
+    { 
 
         /// <summary>
         /// 关联ID
@@ -52,6 +48,6 @@ namespace SpiderModel.Models
         /// <summary>
         /// 车型
         /// </summary>
-        public virtual ISet<CarModel> CarModels { get; set; }
+        public virtual ISet<CarModelEntity> CarModels { get; set; }
     }
 }

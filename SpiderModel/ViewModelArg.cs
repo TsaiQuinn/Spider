@@ -9,7 +9,7 @@
 
 using System;
 
-namespace SpiderModel.Entity
+namespace SpiderModel
 {
     public class ViewModelArg<T> : EventArgs where T : class
     {

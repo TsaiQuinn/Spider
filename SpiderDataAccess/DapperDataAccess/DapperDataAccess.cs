@@ -7,18 +7,16 @@
 
 #endregion
 
+using DapperExtensions;
+using MySql.Data.MySqlClient;
+using SpiderIDataAccess.IDapperDataAccess;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using DapperExtensions;
-using MySql.Data.MySqlClient;
-using NHibernate.Util;
-using SpiderIDataAccess.IDapperDataAccess;
 
 namespace SpiderDataAccess.DapperDataAccess
 {

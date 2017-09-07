@@ -23,11 +23,12 @@ using HtmlAgilityPack;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Ninject;
+using SpiderBusiness.NhibernateBusiness;
 using SpiderCommon;
 using SpiderIBusiness;
-using SpiderIBusiness.IDapperBusiness;
+using SpiderIBusiness.INhibernateBusiness;
 using SpiderIView;
-using SpiderModel.Entity;
+using SpiderModel; 
 using SpiderModel.Models;
 
 namespace SpiderPresenters
@@ -43,6 +44,7 @@ namespace SpiderPresenters
         public CrawlPresenter(ICrawlView view) : base(view)
         {
             this._logoPath = Directory.GetCurrentDirectory() + @"\image\logo\";
+            this.CarBrandBusiness = new CarBrandBusiness();
         }
 
         //如果使用Inject则添加该属性
@@ -120,13 +122,13 @@ namespace SpiderPresenters
                         SpiderFile.DownImage(replaceUrl, this._logoPath, "/Upload/logo/", dataBasePath =>
                         {
                             carBrand.BrandLogo = dataBasePath;
-                            var dic = new Dictionary<Expression<Func<CarBrandEntity, object>>, object>
+                            var dic = new Dictionary<Expression<Func<SpiderModel.Entity.CarBrandEntity, object>>, object>
                             {
                                 {entity => entity.Rid, Operator.Eq},
 //                                {entity => entity.TagName, Operator.Eq},
 //                                {entity => entity.Url, Operator.Eq}
                             };
-                            return CarBrandBusiness.Insert(carBrand, dic);
+                            return CarBrandBusiness.Insert(carBrand);
                         });
 
 
@@ -140,7 +142,7 @@ namespace SpiderPresenters
                         JObject modelJObject = (JObject) JsonConvert.DeserializeObject(modelStr);
                         Dictionary<string, object> modelDictionary =
                             JsonConvert.DeserializeObject<Dictionary<string, object>>(modelJObject["brand"].ToString());
-                        IList<CarModel> carModels = new List<CarModel>();
+                        IList<SpiderModel.Models.CarModelEntity> carModels = new List<SpiderModel.Models.CarModelEntity>();
                         JArray array = JArray.FromObject(modelDictionary[carBrand.TagName]);
                         foreach (var token in array)
                         {
@@ -153,7 +155,7 @@ namespace SpiderPresenters
                                     {
                                         JToken childrenArray = JToken.FromObject(child["child"]);
                                         foreach (var model in childrenArray)
-                                            carModels.Add(new CarModel
+                                            carModels.Add(new SpiderModel.Models.CarModelEntity
                                             {
                                                 BrandId = carBrand.Id,
                                                 ModelName = model["name"].ToString(),
@@ -164,7 +166,7 @@ namespace SpiderPresenters
                                     }
                                     else
                                     {
-                                        carModels.Add(new CarModel
+                                        carModels.Add(new SpiderModel.Models.CarModelEntity
                                         {
                                             BrandId = carBrand.Id,
                                             ModelName = child["name"].ToString(),

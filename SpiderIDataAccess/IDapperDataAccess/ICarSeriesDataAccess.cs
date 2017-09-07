@@ -5,11 +5,10 @@
 // Create Time:9:21 
 #endregion
 
+using SpiderModel.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using SpiderModel.Entity;
-using SpiderModel.Models;
 
 namespace SpiderIDataAccess.IDapperDataAccess
 {

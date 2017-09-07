@@ -9,6 +9,7 @@
 
 using SpiderModel.Models;
 using System;
+using SpiderModel;
 using SpiderModel.Entity;
 
 namespace SpiderIView

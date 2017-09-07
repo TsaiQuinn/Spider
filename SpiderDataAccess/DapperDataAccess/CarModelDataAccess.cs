@@ -7,25 +7,22 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq.Expressions;
 using DapperExtensions;
 using SpiderIDataAccess.IDapperDataAccess;
 using SpiderModel.Entity;
-using SpiderModel.Models;
+using System;
+using System.Data;
 
 namespace SpiderDataAccess.DapperDataAccess
 {
-    public class CarModelDataAccess : DapperDataAccess<CarModelEntity>, ICarModelDataAccess
+    public class CarModelDataAccess : DapperDataAccess<SpiderModel.Entity.CarModelEntity>, ICarModelDataAccess
     {
         /// <summary>
         /// 删除
         /// </summary>
         /// <param name="car">实体对象</param>
         /// <returns></returns>
-        public bool Delete(CarModelEntity car)
+        public bool Delete(SpiderModel.Entity.CarModelEntity car)
         {
             bool result = false;
             base.OpenConnection(connection =>

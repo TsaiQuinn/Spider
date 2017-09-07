@@ -2,12 +2,8 @@
 
 namespace SpiderModel.Models
 {
-    public class CarModel
-    {
-        /// <summary>
-        ///     主键ID
-        /// </summary>
-        public virtual int? Id { get; set; }
+    public class CarModelEntity : Car
+    { 
 
         /// <summary>
         /// 品牌ID
@@ -76,6 +72,6 @@ namespace SpiderModel.Models
         /// <summary>
         /// 品牌
         /// </summary>
-        public virtual CarBrand CarBrand { get; set; }
+        public virtual CarBrandEntity CarBrand { get; set; }
     }
 }

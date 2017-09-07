@@ -7,15 +7,16 @@
 
 #endregion
 
+using NHibernate;
+using NHibernate.Linq;
+using SpiderIDataAccess.INhibernateDataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NHibernate;
-using NHibernate.Linq; 
 
 namespace SpiderDataAccess.NhibernateDataAccess
 {
-    public class BaseDataAccess<T> where T : class
+    public class BaseDataAccess<T> : ICarDataAccess<T>  where T : class
     {  
         /// <summary>
         /// 新增
@@ -51,7 +52,7 @@ namespace SpiderDataAccess.NhibernateDataAccess
         /// 删除
         /// </summary>
         /// <param name="model">实体对象</param>
-        public virtual void Delete(T model)
+        public virtual bool Delete(T model)
         {
             using (ISession session = NHibernateHelper.OpenSession())
             using (var transaction = session.BeginTransaction())
@@ -61,6 +62,7 @@ namespace SpiderDataAccess.NhibernateDataAccess
                     session.Delete(model);
                     session.Flush();
                     transaction.Commit();
+                    return true;
                 }
                 catch (Exception)
                 {

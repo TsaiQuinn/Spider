@@ -50,6 +50,7 @@
     <Compile Include="IDapperDataAccess\ICarBrandDataAccess.cs" />
     <Compile Include="IDapperDataAccess\ICarDataAccess.cs" />
     <Compile Include="IDapperDataAccess\ICarModelDataAccess.cs" />
+    <Compile Include="INhibernateDataAccess\ICarDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

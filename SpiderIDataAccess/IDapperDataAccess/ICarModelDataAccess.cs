@@ -5,11 +5,10 @@
 // Create Time:11:06 
 #endregion
 
+using SpiderModel.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using SpiderModel.Entity;
-using SpiderModel.Models;
 
 namespace SpiderIDataAccess.IDapperDataAccess
 {
@@ -20,21 +19,21 @@ namespace SpiderIDataAccess.IDapperDataAccess
         /// </summary>
         /// <param name="brand">品牌</param>
         /// <returns></returns>
-        int Insert(CarModelEntity brand);
+        int Insert(SpiderModel.Entity.CarModelEntity brand);
 
         /// <summary>
         /// 删除
         /// </summary>
         /// <param name="brand">品牌</param>
         /// <returns></returns>
-        bool Delete(CarModelEntity brand);
+        bool Delete(SpiderModel.Entity.CarModelEntity brand);
 
         /// <summary>
         /// 更新
         /// </summary>
         /// <param name="brand">品牌</param>
         /// <returns></returns>
-        bool Update(CarModelEntity brand);
+        bool Update(SpiderModel.Entity.CarModelEntity brand);
 
         /// <summary>
         /// 查询
@@ -49,6 +48,6 @@ namespace SpiderIDataAccess.IDapperDataAccess
         /// <param name="expression">表达式</param>
         /// <param name="parameters">参数</param>
         /// <returns>返回列表</returns>
-        IList<CarModelEntity> QueryList(Dictionary<Expression<Func<CarModelEntity, object>>, object> expression, object parameters);
+        IList<SpiderModel.Entity.CarModelEntity> QueryList(Dictionary<Expression<Func<SpiderModel.Entity.CarModelEntity, object>>, object> expression, object parameters);
     }
 }

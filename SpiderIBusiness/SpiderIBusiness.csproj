@@ -48,6 +48,7 @@
     <Compile Include="INhibernateBusiness\ICarBrandBusiness.cs" />
     <Compile Include="IDapperBusiness\ICarBrandBusiness.cs" />
     <Compile Include="IDapperBusiness\ICarBusiness.cs" />
+    <Compile Include="INhibernateBusiness\ICarBusiness.cs" />
     <Compile Include="INhibernateBusiness\ICarModelBusiness.cs" />
     <Compile Include="IDapperBusiness\ICarModelBusiness.cs" />
     <Compile Include="IDapperBusiness\ICarSeriesBusiness.cs" />

@@ -3,6 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using SpiderIView;
+using SpiderModel;
 using SpiderModel.Entity;
 using SpiderModel.Models;
 
@@ -50,7 +51,7 @@ namespace SpiderForm
             {
                 this.labelBrandInsert.Text = $@"新增:{int.Parse(labelBrandInsert.Text.Split(':')[1]) + 1}";
             }
-            CarBrandEntity arg = (CarBrandEntity) viewModelArg.Car;
+            SpiderModel.Entity.CarBrandEntity arg = (SpiderModel.Entity.CarBrandEntity) viewModelArg.Car;
             this.labelBrandName.Text = arg.BrandName;
             BackgroundImageLayout = ImageLayout.Center;
             string logo =

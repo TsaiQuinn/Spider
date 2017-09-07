@@ -7,16 +7,11 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq.Expressions;
-using Dapper;
 using DapperExtensions;
-using NHibernate.Util;
 using SpiderIDataAccess.IDapperDataAccess;
 using SpiderModel.Entity;
-using SpiderModel.Models;
+using System;
+using System.Data;
 
 namespace SpiderDataAccess.DapperDataAccess
 {
@@ -27,7 +22,7 @@ namespace SpiderDataAccess.DapperDataAccess
         /// </summary>
         /// <param name="car">实体对象</param>
         /// <returns></returns>
-        public bool Delete(CarBrandEntity car)
+        public bool Delete(SpiderModel.Entity.CarBrandEntity car)
         {
             bool result = false;
             base.OpenConnection(connection =>
@@ -37,8 +32,8 @@ namespace SpiderDataAccess.DapperDataAccess
                     try
                     {
                         var predicate =
-                            Predicates.Field<CarModelEntity>(entity => entity.BrandId, Operator.Eq, car.Id);
-                        var models = connection.GetList<CarModelEntity>(predicate, null, transaction);
+                            Predicates.Field<SpiderModel.Entity.CarModelEntity>(entity => entity.BrandId, Operator.Eq, car.Id);
+                        var models = connection.GetList<SpiderModel.Entity.CarModelEntity>(predicate, null, transaction);
                         foreach (var carModel in models)
                         {
                             var predicates =

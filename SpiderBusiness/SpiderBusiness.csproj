@@ -55,6 +55,7 @@
     <Compile Include="DapperBusiness\CarModelBusiness.cs" />
     <Compile Include="DapperBusiness\CarSeriesBusiness.cs" />
     <Compile Include="NhibernateBusiness\CarBrandBusiness.cs" />
+    <Compile Include="NhibernateBusiness\CarBusiness.cs" />
     <Compile Include="NhibernateBusiness\CarModelBusiness.cs" />
     <Compile Include="DapperBusiness\CarBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,6 +64,10 @@
     <ProjectReference Include="..\SpiderCommon\SpiderCommon.csproj">
       <Project>{270cbe3d-0f53-4de4-8bc2-a5d59dee96b7}</Project>
       <Name>SpiderCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpiderDataAccess\SpiderDataAccess.csproj">
+      <Project>{221560dc-d47c-4a49-b66b-d8aa3e35d222}</Project>
+      <Name>SpiderDataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\SpiderIBusiness\SpiderIBusiness.csproj">
       <Project>{ad42756e-c781-4da9-a51d-d265002580e5}</Project>
