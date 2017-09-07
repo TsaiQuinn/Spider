@@ -51,10 +51,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mappings\CarBrand.hbm.xml" />
+    <EmbeddedResource Include="Mappings\CarBrandEntity.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mappings\CarModel.hbm.xml" />
+    <EmbeddedResource Include="Mappings\CarModelEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

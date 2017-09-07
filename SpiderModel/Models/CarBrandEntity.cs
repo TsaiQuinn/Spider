@@ -48,6 +48,6 @@ namespace SpiderModel.Models
         /// <summary>
         /// 车型
         /// </summary>
-        public virtual ISet<CarModelEntity> CarModels { get; set; }
+        public virtual ISet<CarModelEntity> CarModelEntity { get; set; }
     }
 }

@@ -48,7 +48,7 @@ namespace SpiderPresenters
         }
 
         //如果使用Inject则添加该属性
-        [Inject]
+//        [Inject]
         public ICarBusiness<CarBrandEntity> CarBrandBusiness { get; set; }
 
         /// <summary>

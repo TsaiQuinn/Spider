@@ -17,13 +17,8 @@ namespace SpiderBusiness.NhibernateBusiness
 {
     public class CarBusiness<T> : ICarBusiness<T> where T : class
     {
-        /// <summary>初始化 <see cref="T:System.Object" /> 类的新实例。</summary>
-        public CarBusiness()
-        {
-            this.CarDataAccess=new BaseDataAccess<T>();
-        }
 
-        [Inject]
+//        [Inject]
         public virtual ICarDataAccess<T> CarDataAccess { get; set; }
 
         /// <summary>

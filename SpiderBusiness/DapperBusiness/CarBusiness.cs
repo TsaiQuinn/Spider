@@ -20,7 +20,7 @@ namespace SpiderBusiness.DapperBusiness
 {
     public class CarBusiness<T> : ICarBusiness<T> where T : class
     {
-        [Inject]
+//        [Inject]
         public virtual ICarDataAccess<T> CarDataAccess { get; set; }
 
         /// <summary>

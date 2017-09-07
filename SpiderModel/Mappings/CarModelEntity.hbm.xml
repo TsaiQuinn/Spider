@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="SpiderModel.Models" assembly="SpiderModel">
-  <class name="CarModel" table="hengtu_carmodel">
+  <class name="CarModelEntity" table="hengtu_carmodel">
     <id name="Id" type="Int32" column="id" length="11">
       <generator class="identity" />
     </id>
@@ -19,6 +19,6 @@
     <property name="Gearbox" column="gearbox" type="String" length="20" />
     <property name="Warranty" column="warranty" type="String" length="30" />
     <property name="ColorLink" column="color_link" type="String" length="100" />
-    <many-to-one name="CarBrand" column="BrandId" not-null="true" class="SpiderModel.Models.CarBrand,SpiderModel"/>
+    <many-to-one name="CarBrandEntity" column="BrandId" not-null="true" class="SpiderModel.Models.CarBrandEntity,SpiderModel"/>
   </class>
 </hibernate-mapping> 

@@ -70,9 +70,7 @@ namespace SpiderForm
 
             kernel.Bind<ICrawlView>().To<CrawlForm>();
             //                        kernel.Bind<ICarBusiness<CarBrandEntity>>().To<CarBusiness<CarBrandEntity>>();
-            //                        kernel.Bind<ICarDataAccess<CarBrandEntity>>().To<BaseDataAccess<CarBrandEntity>>();
-            kernel.Bind<ICarBrandBusiness>().To<CarBrandBusiness>();
-            kernel.Bind<ICarBrandDataAccess>().To<CarBrandDataAccess>();
+            //                        kernel.Bind<ICarDataAccess<CarBrandEntity>>().To<BaseDataAccess<CarBrandEntity>>(); 
             kernel.Bind<CrawlPresenter>().ToSelf();
 
             #endregion

@@ -72,6 +72,6 @@ namespace SpiderModel.Models
         /// <summary>
         /// 品牌
         /// </summary>
-        public virtual CarBrandEntity CarBrand { get; set; }
+        public virtual CarBrandEntity CarBrandEntity { get; set; }
     }
 }

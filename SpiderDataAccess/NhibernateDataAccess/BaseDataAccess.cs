@@ -35,8 +35,9 @@ namespace SpiderDataAccess.NhibernateDataAccess
                     session.Flush();
                     transaction.Commit();
                 }
-                catch (Exception)
+                catch (Exception exception)
                 {
+                    Console.Write(exception);
                     transaction.Rollback();
                     throw;
                 }
@@ -64,8 +65,9 @@ namespace SpiderDataAccess.NhibernateDataAccess
                     transaction.Commit();
                     return true;
                 }
-                catch (Exception)
+                catch (Exception exception)
                 {
+                    Console.Write(exception);
                     transaction.Rollback();
                     throw;
                 }
@@ -92,8 +94,9 @@ namespace SpiderDataAccess.NhibernateDataAccess
                     transaction.Commit();
                     return true;
                 }
-                catch (Exception)
+                catch (Exception exception)
                 {
+                    Console.Write(exception);
                     transaction.Rollback();
                     throw;
                 }
@@ -121,8 +124,9 @@ namespace SpiderDataAccess.NhibernateDataAccess
                     session.Flush();
                     transaction.Commit();
                 }
-                catch (Exception)
+                catch (Exception exception)
                 {
+                    Console.Write(exception);
                     transaction.Rollback();
                     throw;
                 }
@@ -153,8 +157,9 @@ namespace SpiderDataAccess.NhibernateDataAccess
                     session.Flush();
                     transaction.Commit();
                 }
-                catch (Exception)
+                catch (Exception exception)
                 {
+                    Console.Write(exception);
                     transaction.Rollback();
                     throw;
                 }

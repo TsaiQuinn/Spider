@@ -18,7 +18,7 @@ namespace SpiderBusiness.DapperBusiness
         {
         }
 
-        [Inject]
+//        [Inject]
         public override ICarDataAccess<CarBrandEntity> CarDataAccess { get; set; }
     }
 }
