@@ -34,9 +34,6 @@
     <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
     </Reference>
-    <Reference Include="DapperExtensions, Version=1.6.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DapperExtensions.1.6.3\lib\net45\DapperExtensions.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,11 +42,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="INhibernateBusiness\ICarBrandBusiness.cs" />
     <Compile Include="IDapperBusiness\ICarBrandBusiness.cs" />
     <Compile Include="IDapperBusiness\ICarBusiness.cs" />
-    <Compile Include="INhibernateBusiness\ICarBusiness.cs" />
-    <Compile Include="INhibernateBusiness\ICarModelBusiness.cs" />
     <Compile Include="IDapperBusiness\ICarModelBusiness.cs" />
     <Compile Include="IDapperBusiness\ICarSeriesBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

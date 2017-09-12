@@ -7,49 +7,11 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using SpiderModel.Entity; 
+using SpiderModel.Entity;
 
 namespace SpiderIDataAccess.IDapperDataAccess
 {
-    public interface ICarBrandDataAccess
+    public interface ICarBrandDataAccess : ICarDataAccess<CarBrandEntity>
     {
-        /// <summary>
-        /// 新增
-        /// </summary>
-        /// <param name="brand">品牌</param>
-        /// <returns></returns>
-        int Insert(SpiderModel.Entity.CarBrandEntity brand);
-
-        /// <summary>
-        /// 删除
-        /// </summary>
-        /// <param name="brand">品牌</param>
-        /// <returns></returns>
-        bool Delete(SpiderModel.Entity.CarBrandEntity brand);
-
-        /// <summary>
-        /// 更新
-        /// </summary>
-        /// <param name="brand">品牌</param>
-        /// <returns></returns>
-        bool Update(SpiderModel.Entity.CarBrandEntity brand);
-
-        /// <summary>
-        /// 查询
-        /// </summary>
-        /// <param name="id">ID</param>
-        /// <returns>返回对象</returns>
-        CarBrandEntity FindBy(object id);
-
-        /// <summary>
-        /// 查询列表
-        /// </summary>
-        /// <param name="expression">表达式</param>
-        /// <param name="parameters">参数</param>
-        /// <returns>返回列表</returns>
-        IList<SpiderModel.Entity.CarBrandEntity> QueryList(Dictionary<Expression<Func<SpiderModel.Entity.CarBrandEntity, object>>, object> expression, object parameters);
     }
 }

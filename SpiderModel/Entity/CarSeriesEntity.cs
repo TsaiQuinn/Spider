@@ -5,13 +5,16 @@
 // Create Time:11:19 
 #endregion
 
-using System;
-using SpiderModel.Models;
+using System; 
 
 namespace SpiderModel.Entity
 {
     public class CarSeriesEntity : Car
-    { 
+    {
+        /// <summary>
+        /// 主键
+        /// </summary>
+//        public virtual int Id { get; set; }
         /// <summary>
         ///     车型ID
         /// </summary>

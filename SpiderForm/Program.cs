@@ -2,11 +2,7 @@
 using System.Windows.Forms;
 using DevExpress.Skins;
 using DevExpress.UserSkins;
-using Ninject;
-using SpiderBusiness.NhibernateBusiness;
-using SpiderDataAccess.NhibernateDataAccess;
-using SpiderIBusiness.INhibernateBusiness;
-using SpiderIDataAccess.INhibernateDataAccess;
+using Ninject; 
 using SpiderIView;
 using SpiderModel.Entity;
 using SpiderPresenters;

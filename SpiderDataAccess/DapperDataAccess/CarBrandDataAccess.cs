@@ -7,54 +7,66 @@
 
 #endregion
 
-using DapperExtensions;
-using SpiderIDataAccess.IDapperDataAccess;
-using SpiderModel.Entity;
 using System;
 using System.Data;
+using System.Linq;
+using Dapper;
+using SpiderIDataAccess.IDapperDataAccess;
+using SpiderModel.Entity;
 
 namespace SpiderDataAccess.DapperDataAccess
 {
     public class CarBrandDataAccess : DapperDataAccess<CarBrandEntity>, ICarBrandDataAccess
     {
         /// <summary>
-        /// 删除
-        /// </summary>
-        /// <param name="car">实体对象</param>
+        ///     删除
+        /// </summary> 
+        /// <param name="id">ID</param>
         /// <returns></returns>
-        public bool Delete(SpiderModel.Entity.CarBrandEntity car)
+        public override bool Delete(int id)
         {
-            bool result = false;
+            var result = true;
             base.OpenConnection(connection =>
             {
-                using (IDbTransaction transaction = connection.BeginTransaction())
+                var list = connection.Query<CarModelEntity>("SELECT id FROM hengtu_carmodel WHERE brandid=@Id", id)
+                    .ToList();
+                if (list.Any())
                 {
+                    var transaction = connection.BeginTransaction();
                     try
-                    {
-                        var predicate =
-                            Predicates.Field<SpiderModel.Entity.CarModelEntity>(entity => entity.BrandId, Operator.Eq, car.Id);
-                        var models = connection.GetList<SpiderModel.Entity.CarModelEntity>(predicate, null, transaction);
-                        foreach (var carModel in models)
+                    { 
+                        foreach (var entity in list)
                         {
-                            var predicates =
-                                Predicates.Field<CarSeriesEntity>(entity => entity.ModelId, Operator.Eq, carModel.Id);
-                            connection.Delete<CarSeriesEntity>(predicates, transaction);
-                            connection.Delete(carModel, transaction);
-                            
+                            connection.Execute("DELETE FROM hengtu_carmodeldetail WHERE modelid=@Id", entity.Id, transaction);
+                            connection.Execute("DELETE FROM hengtu_carmodel WHERE id=@Id", entity.Id, transaction);
                         }
-                        connection.Delete(car, transaction);
+                        connection.Execute("DELETE FROM hengtu_carbrand WHERE id=@Id", id,transaction);
                         transaction.Commit();
-                        result = true;
                     }
                     catch (Exception e)
                     {
+                        result = false;
                         transaction.Rollback();
                         Console.WriteLine(e);
                         throw;
-                    } 
+                    }
+                }
+                else
+                {
+                    result = base.Delete("DELETE FROM hengtu_carbrand WHERE id=@Id", id);
                 }
             });
             return result;
-        } 
+        }
+
+        /// <summary>
+        ///     删除
+        /// </summary> 
+        /// <param name="id">ID</param>
+        /// <returns></returns>
+        bool ICarDataAccess<CarBrandEntity>.Delete(int id)
+        {
+            return Delete(id);
+        }
     }
 }

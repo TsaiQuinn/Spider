@@ -5,14 +5,16 @@
 // Create Time:11:18 
 #endregion
 
-using System;
-using SpiderModel.Models;
+using System; 
 
 namespace SpiderModel.Entity
 {
     public class CarModelEntity : Car
-    { 
-
+    {
+        /// <summary>
+        /// 主键
+        /// </summary>
+//        public virtual int Id { get; set; }
         /// <summary>
         /// 品牌ID
         /// </summary>
@@ -77,5 +79,9 @@ namespace SpiderModel.Entity
         ///  添加时间      
         /// </summary>
         public virtual DateTime? AddTime { get; set; }
+        /// <summary>
+        /// 图片地址
+        /// </summary>
+        public virtual string ImageUrl { get; set; }
     }
 }

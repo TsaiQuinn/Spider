@@ -6,8 +6,7 @@
 // Create Time:14:33 
 
 #endregion
-
-using SpiderModel.Models;
+ 
 using System;
 using SpiderModel;
 using SpiderModel.Entity;
@@ -29,6 +28,15 @@ namespace SpiderIView
         /// <summary>
         /// 界面显示
         /// </summary>
-        Action<ViewModelArg<Car>> ShowInfoAction { get; set; }
+        Action<ViewModelArg<CarBrandEntity>> ShowBrandInfoAction { get; set; }
+
+        /// <summary>
+        /// 界面显示
+        /// </summary>
+        Action<ViewModelArg<CarModelEntity>> ShowModelInfoAction { get; set; }
+        /// <summary>
+        /// 界面显示
+        /// </summary>
+        Action<ViewModelArg<CarSeriesEntity>> ShowSeriesInfoAction { get; set; }
     }
 }

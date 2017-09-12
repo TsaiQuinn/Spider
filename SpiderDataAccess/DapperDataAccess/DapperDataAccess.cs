@@ -7,16 +7,14 @@
 
 #endregion
 
-using DapperExtensions;
-using MySql.Data.MySqlClient;
-using SpiderIDataAccess.IDapperDataAccess;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
+using Dapper;
+using MySql.Data.MySqlClient;
+using SpiderIDataAccess.IDapperDataAccess;
 
 namespace SpiderDataAccess.DapperDataAccess
 {
@@ -25,7 +23,111 @@ namespace SpiderDataAccess.DapperDataAccess
         private readonly string _mysqlConnection = ConfigurationManager.ConnectionStrings["MysqlConnectStr"].ToString();
 
         /// <summary>
-        /// 打开连接
+        ///     新增
+        /// </summary>
+        /// <param name="sql">SQL语句</param>
+        /// <param name="parameters">参数</param>
+        /// <returns>返回ID</returns>
+        public virtual int Insert(string sql, object parameters)
+        {
+            return Insert(sql, parameters, null);
+        }
+
+        /// <summary>
+        ///     新增
+        /// </summary>
+        /// <param name="sql">SQL语句</param>
+        /// <param name="parameters">参数</param>
+        /// <param name="transaction">事务</param>
+        /// <returns>返回ID</returns>
+        public virtual int Insert(string sql, object parameters, IDbTransaction transaction)
+        {
+            var result = 0;
+            OpenConnection(conn => result = conn.Execute(sql, parameters, transaction));
+            return result;
+        }
+
+        /// <summary>
+        ///     删除
+        /// </summary>
+        /// <param name="sql">SQL语句</param>
+        /// <param name="parameters">参数</param>
+        /// <returns></returns>
+        public virtual bool Delete(string sql, object parameters)
+        {
+            var result = false;
+            OpenConnection(conn =>
+            {
+                result = conn.Execute(sql, parameters) > 0;
+            });
+            return result;
+        }
+
+        /// <summary>
+        ///     删除
+        /// </summary> 
+        /// <param name="id">ID</param>
+        /// <returns></returns>
+        public virtual bool Delete(int id)
+        {
+            throw new NotImplementedException();
+        } 
+
+        /// <summary>
+        ///     更新
+        /// </summary>
+        /// <param name="sql">SQL语句</param>
+        /// <param name="parameters">参数</param>
+        /// <param name="transaction">事务</param>
+        /// <returns></returns>
+        public virtual bool Update(string sql, object parameters, IDbTransaction transaction)
+        {
+            var result = false;
+            OpenConnection(connection => { result = connection.Execute(sql, parameters, transaction) > 0; });
+            return result;
+        }
+
+        /// <summary>
+        ///     更新
+        /// </summary>
+        /// <param name="sql">SQL语句</param>
+        /// <param name="parameters">参数</param>
+        /// <returns></returns>
+        public virtual bool Update(string sql, object parameters)
+        {
+            return Update(sql, parameters, null);
+        }
+
+        /// <summary>
+        ///     查询
+        /// </summary>
+        /// <param name="sql">SQL语句</param>
+        /// <param name="parameters">参数</param>
+        /// <param name="transaction">事务</param>
+        /// <returns>返回对象</returns>
+        public virtual T FindBy(string sql, object parameters, IDbTransaction transaction)
+        {
+            T result = null;
+            OpenConnection(connction => result = connction.QuerySingleOrDefault<T>(sql, parameters, transaction));
+            return result;
+        }
+
+        /// <summary>
+        ///     查询列表
+        /// </summary>
+        /// <param name="sql">SQL语句</param>
+        /// <param name="parameter">参数</param>
+        /// <param name="transaction">事务</param>
+        /// <returns>返回列表</returns>
+        public IList<T> QueryList(string sql, object parameter, IDbTransaction transaction)
+        {
+            IList<T> list = null;
+            OpenConnection(connection => { list = connection.Query<T>(sql, parameter, transaction).ToList(); });
+            return list;
+        }
+
+        /// <summary>
+        ///     打开连接
         /// </summary>
         /// <param name="action">执行委托</param>
         protected void OpenConnection(Action<IDbConnection> action)
@@ -35,90 +137,6 @@ namespace SpiderDataAccess.DapperDataAccess
                 conn.Open();
                 action(conn);
             }
-        }
-
-        /// <summary>
-        /// 新增
-        /// </summary>
-        /// <param name="model">实体对象</param>
-        /// <returns>返回ID</returns>
-        public virtual int Insert(T model)
-        {
-            int result = 0;
-            OpenConnection(conn => result = conn.Insert(model));
-            return result;
-        }
-
-        /// <summary>
-        /// 删除
-        /// </summary>
-        /// <param name="car">实体对象</param>
-        /// <returns></returns>
-        public bool Delete(T car)
-        {
-            bool result = false;
-            OpenConnection(conn => { result = conn.Delete(car); });
-            return result;
-        }
-
-        /// <summary>
-        /// 删除
-        /// </summary>
-        /// <param name="model">实体对象</param>
-        /// <param name="transaction">事务</param>
-        protected virtual bool Delete(T model, IDbTransaction transaction = null)
-        {
-            bool result = false;
-            OpenConnection(conn => { result = conn.Delete(model, transaction); });
-            return result;
-        }
-
-        /// <summary>
-        /// 更新
-        /// </summary>
-        /// <param name="model">实体对象</param> 
-        public virtual bool Update(T model)
-        {
-            bool result = false;
-            OpenConnection(connection => result = connection.Update(model));
-            return result;
-        }
-
-        /// <summary>
-        /// 查询
-        /// </summary>
-        /// <param name="id">ID</param>
-        /// <returns>返回对象</returns>
-        public virtual T FindBy(object id)
-        {
-            T result = null;
-            OpenConnection(connction => result = connction.Get<T>(id));
-            return result;
-        }
-
-        /// <summary>
-        /// 查询列表
-        /// </summary>
-        /// <param name="expressions">表达式</param>
-        /// <param name="parameter">参数</param>
-        /// <returns>返回列表</returns>
-        public virtual IList<T> QueryList(Dictionary<Expression<Func<T, object>>, object> expressions, object parameter)
-        {
-            IList<T> list = null;
-            OpenConnection(connction =>
-            {
-                var predicates = (from pair in expressions
-                                  let propertyInfo = ReflectionHelper.GetProperty(pair.Key) as PropertyInfo
-                                  where propertyInfo != null
-                                  let info = typeof(T).GetProperty(propertyInfo.Name)
-                                  where info != null
-                                  let result = info.GetValue((T) parameter)
-                                  select Predicates.Field(pair.Key, (Operator) pair.Value, result)).Cast<IPredicate>().ToList();
-                var predicate = Predicates.Group(GroupOperator.And);
-                predicate.Predicates = predicates; 
-                list = connction.GetList<T>(predicate).ToList(); 
-            });
-            return list;
         }
     }
 }

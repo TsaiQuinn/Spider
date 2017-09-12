@@ -38,6 +38,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Car.cs" />
     <Compile Include="Entity\CarBrandEntity.cs" />
     <Compile Include="Entity\CarBrandEntityMapper.cs" />
     <Compile Include="Entity\CarModelEntity.cs" />
@@ -45,16 +46,7 @@
     <Compile Include="Entity\CarSeriesEntity.cs" />
     <Compile Include="Entity\CarSeriesEntityMapper.cs" />
     <Compile Include="ViewModelArg.cs" />
-    <Compile Include="Models\Car.cs" />
-    <Compile Include="Models\CarBrandEntity.cs" />
-    <Compile Include="Models\CarModelEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mappings\CarBrandEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mappings\CarModelEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

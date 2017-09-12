@@ -7,46 +7,52 @@
 
 #endregion
 
-using DapperExtensions;
+using System;
+using System.Linq;
+using Dapper;
 using SpiderIDataAccess.IDapperDataAccess;
 using SpiderModel.Entity;
-using System;
-using System.Data;
 
 namespace SpiderDataAccess.DapperDataAccess
 {
-    public class CarModelDataAccess : DapperDataAccess<SpiderModel.Entity.CarModelEntity>, ICarModelDataAccess
+    public class CarModelDataAccess : DapperDataAccess<CarModelEntity>, ICarModelDataAccess
     {
         /// <summary>
-        /// 删除
-        /// </summary>
-        /// <param name="car">实体对象</param>
+        ///     删除
+        /// </summary> 
+        /// <param name="id">ID</param>
         /// <returns></returns>
-        public bool Delete(SpiderModel.Entity.CarModelEntity car)
+        public override bool Delete(int id)
         {
-            bool result = false;
+            var result = true;
             base.OpenConnection(connection =>
             {
-                using (IDbTransaction transaction = connection.BeginTransaction())
+                var transaction = connection.BeginTransaction();
+                try
                 {
-                    try
-                    {
-                        var predicates =
-                            Predicates.Field<CarSeriesEntity>(entity => entity.ModelId, Operator.Eq, car.Id);
-                        connection.Delete<CarSeriesEntity>(predicates, transaction);
-                        connection.Delete(car, transaction);
-                        transaction.Commit();
-                        result = true;
-                    }
-                    catch (Exception e)
-                    {
-                        transaction.Rollback();
-                        Console.WriteLine(e);
-                        throw;
-                    }
+                    connection.Execute("DELETE FROM hengtu_carmodel WHERE id=@Id", id, transaction);
+                    connection.Execute("DELETE FROM hengtu_carmodeldetail WHERE modelid=@Id", id, transaction);
+                    transaction.Commit();
+                }
+                catch (Exception e)
+                {
+                    result = false;
+                    transaction.Rollback();
+                    Console.WriteLine(e);
+                    throw;
                 }
             });
             return result;
-        } 
+        }
+
+        /// <summary>
+        ///     删除
+        /// </summary> 
+        /// <param name="id">ID</param>
+        /// <returns></returns>
+        bool ICarDataAccess<CarModelEntity>.Delete(int id)
+        {
+            return Delete(id);
+        }
     }
 }

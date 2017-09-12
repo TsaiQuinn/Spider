@@ -37,9 +37,6 @@
     <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
     </Reference>
-    <Reference Include="DapperExtensions, Version=1.6.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DapperExtensions.1.6.3\lib\net45\DapperExtensions.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
@@ -54,9 +51,6 @@
     <Compile Include="DapperBusiness\CarBrandBusiness.cs" />
     <Compile Include="DapperBusiness\CarModelBusiness.cs" />
     <Compile Include="DapperBusiness\CarSeriesBusiness.cs" />
-    <Compile Include="NhibernateBusiness\CarBrandBusiness.cs" />
-    <Compile Include="NhibernateBusiness\CarBusiness.cs" />
-    <Compile Include="NhibernateBusiness\CarModelBusiness.cs" />
     <Compile Include="DapperBusiness\CarBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -83,6 +77,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
